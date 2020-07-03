@@ -22,3 +22,8 @@ Auth::routes();
 Route::get('/home', function() {
     return view('admin.home');
 })->name('home')->middleware('auth');
+
+Route::get('/admin/leads', function() {
+    return view('admin.leads');
+})->name('leads')->middleware('auth');
+
