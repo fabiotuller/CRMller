@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'CRMller',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -45,12 +45,12 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<b>CRMller</b>',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'AdminLTE',
+    'logo_img_alt' => 'CRMller',
 
     /*
     |--------------------------------------------------------------------------
@@ -236,17 +236,31 @@ return [
             'search' => true,
             'topnav' => true,
         ],
+//        [
+//            'text' => 'blog',
+//            'url'  => 'admin/blog',
+//            'can'  => 'manage-blog',
+//        ],
         [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
+            'text'        => 'Leads',
+            'url'         => 'admin/leads',
+            'icon'        => 'far fa-fw fa-address-card',
+            //'label'       => 4,
+            //'label_color' => 'success',
         ],
         [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
+            'text'        => 'Customers',
+            'url'         => 'admin/customers',
+            'icon'        => 'far fa-fw fa-users',
+            //'label'       => 4,
+            //'label_color' => 'success',
+        ],
+        [
+            'text'        => 'Credit',
+            'url'         => 'admin/credit',
+            'icon'        => 'far fa-fw fa-money-check-alt',
+            //'label'       => 4,
+            //'label_color' => 'success',
         ],
         ['header' => 'account_settings'],
         [
@@ -297,22 +311,22 @@ return [
                 ],
             ],
         ],
-        ['header' => 'labels'],
-        [
-            'text'       => 'important',
-            'icon_color' => 'red',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'cyan',
-            'url'        => '#',
-        ],
+//        ['header' => 'labels'],
+//        [
+//            'text'       => 'important',
+//            'icon_color' => 'red',
+//            'url'        => '#',
+//        ],
+//        [
+//            'text'       => 'warning',
+//            'icon_color' => 'yellow',
+//            'url'        => '#',
+//        ],
+//        [
+//            'text'       => 'information',
+//            'icon_color' => 'cyan',
+//            'url'        => '#',
+//        ],
     ],
 
     /*
