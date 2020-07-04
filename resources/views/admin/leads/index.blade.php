@@ -40,7 +40,10 @@
                                 <td>{{ $lead->phone1 }}</td>
                                 <td>{{ $lead->firstname }}</td>
                                 <td>{{ $lead->lastname }}</td>
-                                <td><a href="#" class="btn btn-xs btn-outline-dark">Detalhes</a><a href="#" class="btn btn-xs btn-outline-danger ml-2">Apagar</a></td>
+                                <td>
+                                    <a href="{{ route('formEditLead', $lead->id) }}" class="btn btn-xs btn-outline-dark">Detalhes</a>
+                                    <button class="btn btn-outline-danger btn-xs" onclick="confirm('Você tem certeza que deseja excluir esse Lead?')"> Apagar</button>
+                                </td>
                             </tr>
                         @empty
                             <p>nenhum lead cadastrado!</p>
