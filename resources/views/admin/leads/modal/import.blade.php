@@ -6,7 +6,7 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <form action="{{route(//'admin.adm01.citiesImport')}}" method="post" enctype="multipart/form-data" class="btn btn-light">
+                <form action="{{ route('leadsImport') }}" method="post" enctype="multipart/form-data" class="btn btn-light">
                     <label>Selecione um arquivo: </label>
                     <input type="file" name="file">
                     @csrf

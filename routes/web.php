@@ -18,12 +18,22 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::get('/home',function (){
+    return redirect('/admin/home');
+});
 
-Route::get('/home', function() {
-    return view('admin.home');
-})->name('home')->middleware('auth');
+Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth'],function (){
 
-Route::get('/admin/leads', function() {
-    return view('admin.leads');
-})->name('leads')->middleware('auth');
+    Route::get('/home', function() {
+        return view('admin.home');
+    })->name('home');
+
+    Route::get('leads/index', 'LeadsController@index')->name('leads');
+
+    Route::post('leads/import','LeadsController@import')->name('leadsImport');
+
+});
+
+
+
 

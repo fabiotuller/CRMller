@@ -3,7 +3,13 @@
 @section('title', 'CRMller')
 
 @section('content_header')
-    <h1 class="m-0 text-dark">Leads</h1>
+    <div class="row">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <h1 class="col-9 text-dark">Leads</h1>
+            <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#modalImport">Importar</button>
+            @include('admin.leads.modal.import')
+        </div>
+    </div>
 @stop
 
 @section('content')
@@ -25,17 +31,20 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @for($i = 0; $i < 50; $i++)
-                        <tr role="row" class="odd">
-                            <td tabindex="0" class="sorting_1"> {{ $i + 1 }} </td>
-                            <td>{{ mt_rand() }}</td>
-                            <td>{{ str_shuffle('fabiomonique') . '@gmail.com' }}</td>
-                            <td>{{ '(11) 9' . mt_rand(9000,9999) . mt_rand(1000,9999) }}</td>
-                            <td>Fábio e Monique</td>
-                            <td>Tuller</td>
-                            <td><a href="#" class="btn btn-xs btn-outline-dark">Detalhes</a><a href="#" class="btn btn-xs btn-outline-danger ml-2">Apagar</a></td>
-                        </tr>
-                        @endfor
+
+                        @forelse($leads as $lead)
+                            <tr role="row" class="odd">
+                                <td tabindex="0" class="sorting_1"> {{ $lead->id }} </td>
+                                <td>{{ $lead->document }}</td>
+                                <td>{{ $lead->email }}</td>
+                                <td>{{ $lead->phone1 }}</td>
+                                <td>{{ $lead->firstname }}</td>
+                                <td>{{ $lead->lastname }}</td>
+                                <td><a href="#" class="btn btn-xs btn-outline-dark">Detalhes</a><a href="#" class="btn btn-xs btn-outline-danger ml-2">Apagar</a></td>
+                            </tr>
+                        @empty
+                            <p>nenhum lead cadastrado!</p>
+                        @endforelse
                         </tbody>
                         <tfoot>
                         <tr>
