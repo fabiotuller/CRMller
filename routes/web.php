@@ -28,9 +28,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth
         return view('admin.home');
     })->name('home');
 
-    Route::get('leads/index', 'LeadsController@index')->name('leads');
-
     Route::post('leads/import','LeadsController@import')->name('leadsImport');
+    Route::get('leads/index', 'LeadsController@index')->name('leads');
+    //Route::get('lead/{lead}', 'LeadsController@lead')->name('lead');
+    Route::get('lead/edit/{lead}','LeadsController@formEdit')->name('formEditLead');
+    Route::put('lead/editar/{lead}','LeadsController@edit')->name('editLead');
 
 });
 
