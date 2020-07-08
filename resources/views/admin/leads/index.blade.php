@@ -41,8 +41,15 @@
                                 <td>{{ $lead->firstname }}</td>
                                 <td>{{ $lead->lastname }}</td>
                                 <td>
-                                    <a href="{{ route('formEditLead', $lead->id) }}" class="btn btn-xs btn-outline-dark">Detalhes</a>
-                                    <button class="btn btn-outline-danger btn-xs" onclick="confirm('Você tem certeza que deseja excluir esse Lead?')"> Apagar</button>
+                                    <div class="d-flex">
+                                        <a href="{{ route('formEditLead', $lead->id) }}" class="btn btn-xs btn-outline-dark">Detalhes</a>
+                                        <form action="{{route('destroyLead', $lead->id)}}" method="post">
+                                            @csrf
+                                            @method('delete')
+                                                <input type="hidden" name="id" value="{{ $lead->id }}">
+                                                <button class="btn btn-xs btn-outline-danger " onclick="confirm('Você tem certeza que deseja excluir esse Lead?')"> Apagar</button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @empty

@@ -6,9 +6,14 @@
             <li class="breadcrumb-item"><a href="#"><i class="fa fa-dashboard"></i> {{ $lead->firstname . ' ' . $lead->lastname}}</a></li>
             <li class="breadcrumb-item active">Editar</li>
         </ol>
-        <div class="d-flex">
-            <button class="btn btn-outline-danger btn-sm m-1" onclick="confirm('Você tem certeza que deseja excluir esse Lead?')"> Apagar</button>
-        </div>
+        <form action="{{route('destroyLead', $lead->id)}}" method="post">
+            @csrf
+            @method('delete')
+            <div class="d-flex">
+                <input type="hidden" name="id" value="{{ $lead->id }}">
+                <button class="btn btn-outline-danger btn-sm m-1" onclick="confirm('Você tem certeza que deseja excluir esse Lead?')"> Apagar</button>
+            </div>
+        </form>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -28,42 +33,49 @@
 
                     <div class="tab-content">
                         <div id="home" class="tab-pane fade active show">
-                            <form class="form-horizontal">
+                            <form action="{{route('editLead', $lead->id)}}" method="post" class="form-horizontal">
                                 <div class="card-body">
+                                    @csrf
+                                    @method('put')
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Firstname</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" id="firstname" value="{{ $lead->firstname }}">
+                                            <input type="text" class="form-control" name="firstname" value="{{ $lead->firstname }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Lastname</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" id="lastname" value="{{ $lead->lastname }}">
+                                            <input type="text" class="form-control" name="lastname" value="{{ $lead->lastname }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Document</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" id="document" value="{{ $lead->document }}">
+                                            <input type="text" class="form-control" name="document" value="{{ $lead->document }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Email</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" id="email" value="{{ $lead->email }}">
+                                            <input type="text" class="form-control" name="email" value="{{ $lead->email }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Alternative Email</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" id="alternative_email" value="{{ $lead->alternative_email }}">
+                                            <input type="text" class="form-control" name="alternative_email" value="{{ $lead->alternative_email }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Phone</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" id="phone1" value="{{ $lead->phone1 }}">
+                                            <input type="text" class="form-control" name="phone1" value="{{ $lead->phone1 }}">
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="pull-right float-right">
+                                            <button type="submit" class="btn btn-outline-danger">Atualizar</button>
                                         </div>
                                     </div>
                                 </div>
