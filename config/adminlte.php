@@ -243,7 +243,7 @@ return [
 //        ],
         [
             'text'        => 'Leads',
-            'url'         => 'admin/leads/index',
+            'url'         => 'admin/leads',
             'icon'        => 'far fa-fw fa-address-card',
             //'label'       => 4,
             //'label_color' => 'success',
