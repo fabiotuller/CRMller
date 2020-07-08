@@ -30,9 +30,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth
 
     Route::post('leads/import','LeadsController@import')->name('leadsImport');
     Route::get('leads/index', 'LeadsController@index')->name('leads');
-    //Route::get('lead/{lead}', 'LeadsController@lead')->name('lead');
-    Route::get('lead/edit/{lead}','LeadsController@formEdit')->name('formEditLead');
+    Route::get('lead/edit/{lead}','LeadsController@show')->name('formEditLead');
     Route::put('lead/editar/{lead}','LeadsController@edit')->name('editLead');
+    Route::delete('lead/destroy/{lead}','LeadsController@destroy')->name('destroyLead');
 
 });
 
