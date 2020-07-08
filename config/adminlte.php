@@ -274,9 +274,9 @@ return [
                     'url'  => 'admin/usuarios',
                 ],
                 [
-                    'text' => 'profile',
+                    'text' => 'Roles',
                     'icon' => 'fas fa-fw fa-user',
-                    'url'  => 'admin/settings',
+                    'url'  => 'admin/roles',
                 ],
                 [
                     'text' => 'Outros',
