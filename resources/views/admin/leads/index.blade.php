@@ -47,7 +47,7 @@
                                             @csrf
                                             @method('delete')
                                                 <input type="hidden" name="id" value="{{ $lead->id }}">
-                                                <button class="btn btn-xs btn-outline-danger " onclick="confirm('Você tem certeza que deseja excluir esse Lead?')"> Apagar</button>
+                                                <button class="btn btn-xs btn-outline-danger " onclick="return confirm('Você tem certeza que deseja excluir esse Lead?')"> Apagar</button>
                                         </form>
                                     </div>
                                 </td>

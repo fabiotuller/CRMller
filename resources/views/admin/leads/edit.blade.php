@@ -11,7 +11,7 @@
             @method('delete')
             <div class="d-flex">
                 <input type="hidden" name="id" value="{{ $lead->id }}">
-                <button class="btn btn-outline-danger btn-sm m-1" onclick="confirm('Você tem certeza que deseja excluir esse Lead?')"> Apagar</button>
+                <button class="btn btn-outline-danger btn-sm m-1" onclick="return confirm('Você tem certeza que deseja excluir esse Lead?')"> Apagar</button>
             </div>
         </form>
     </div>
