@@ -63,6 +63,18 @@ class LeadsController extends Controller
      */
     public function edit(Lead $lead, Request $request)
     {
+
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Lead $lead, Request $request)
+    {
         $lead->firstname = $request->firstname;
         $lead->lastname = $request->lastname;
         $lead->document = $request->document;
@@ -74,19 +86,7 @@ class LeadsController extends Controller
         }
         $lead->phone1 = $request->phone1;
         $lead->save();
-        return redirect(route('leads'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        return redirect(route('lead.index'));
     }
 
     /**
@@ -98,7 +98,7 @@ class LeadsController extends Controller
     public function destroy(Lead $lead)
     {
         $lead->delete();
-        return redirect(route('leads'));
+        return redirect(route('lead.index'));
     }
 
     public function import(Request $request)

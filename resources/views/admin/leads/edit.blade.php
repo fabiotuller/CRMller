@@ -2,11 +2,11 @@
 @section('content')
     <div class=" w-100 d-flex justify-content-between align-items-center">
         <ol class="breadcrumb small">
-            <li class="breadcrumb-item"><a href="{{ route('leads') }}"><i class="fa fa-dashboard"></i> Leads</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('lead.index') }}"><i class="fa fa-dashboard"></i> Leads</a></li>
             <li class="breadcrumb-item"><a href="#"><i class="fa fa-dashboard"></i> {{ $lead->firstname . ' ' . $lead->lastname}}</a></li>
             <li class="breadcrumb-item active">Editar</li>
         </ol>
-        <form action="{{route('destroyLead', $lead->id)}}" method="post">
+        <form action="{{route('lead.destroy', $lead->id)}}" method="post">
             @csrf
             @method('delete')
             <div class="d-flex">
@@ -33,7 +33,7 @@
 
                     <div class="tab-content">
                         <div id="home" class="tab-pane fade active show">
-                            <form action="{{route('editLead', $lead->id)}}" method="post" class="form-horizontal">
+                            <form action="{{route('lead.update', $lead->id)}}" method="post" class="form-horizontal">
                                 <div class="card-body">
                                     @csrf
                                     @method('put')

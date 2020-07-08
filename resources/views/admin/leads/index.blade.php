@@ -42,8 +42,8 @@
                                 <td>{{ $lead->lastname }}</td>
                                 <td>
                                     <div class="d-flex">
-                                        <a href="{{ route('formEditLead', $lead->id) }}" class="btn btn-xs btn-outline-dark">Detalhes</a>
-                                        <form action="{{route('destroyLead', $lead->id)}}" method="post">
+                                        <a href="{{ route('lead.show', $lead->id) }}" class="btn btn-xs btn-outline-dark">Detalhes</a>
+                                        <form action="{{route('lead.destroy', $lead->id)}}" method="post">
                                             @csrf
                                             @method('delete')
                                                 <input type="hidden" name="id" value="{{ $lead->id }}">
