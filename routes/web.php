@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::get('/home',function (){
-    return redirect('/admin/home');
+    return redirect(route('home'));
 });
 
 Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth'],function (){
