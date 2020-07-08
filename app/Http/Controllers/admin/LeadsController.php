@@ -61,7 +61,7 @@ class LeadsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Lead $lead, Request $request)
+    public function edit(Lead $lead)
     {
 
     }
