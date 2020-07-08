@@ -75,7 +75,7 @@
                                     </div>
                                     <div class="card-footer">
                                         <div class="pull-right float-right">
-                                            <button type="submit" class="btn btn-outline-danger">Atualizar</button>
+                                            <button type="submit" class="btn btn-info">Atualizar</button>
                                         </div>
                                     </div>
                                 </div>

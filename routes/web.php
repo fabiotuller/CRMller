@@ -36,4 +36,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth
     Route::post('leads/import','LeadsController@import')->name('lead.import');
 });
 
-
+Route::get('envio-email', function (){
+    //return new \App\Mail\newMailCRMller();
+    \Illuminate\Support\Facades\Mail::send(new \App\Mail\newMailCRMller());
+});
