@@ -28,14 +28,15 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth
         return view('admin.home');
     })->name('home');
 
-    Route::post('leads/import','LeadsController@import')->name('leadsImport');
-    Route::get('leads/index', 'LeadsController@index')->name('leads');
-    Route::get('lead/edit/{lead}','LeadsController@show')->name('formEditLead');
-    Route::put('lead/editar/{lead}','LeadsController@edit')->name('editLead');
-    Route::delete('lead/destroy/{lead}','LeadsController@destroy')->name('destroyLead');
-
 });
 
+Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth'], function(){
+    Route::resource('usuarios','UserController')->names('user')->parameters(['usuarios' => 'user']);
+    Route::resource('leads','LeadsController')->names('lead')->parameters(['usuarios' => 'lead']);
+    Route::post('leads/import','LeadsController@import')->name('lead.import');
+});
 
-
-
+Route::get('envio-email', function (){
+    //return new \App\Mail\newMailCRMller();
+    \Illuminate\Support\Facades\Mail::send(new \App\Mail\newMailCRMller());
+});

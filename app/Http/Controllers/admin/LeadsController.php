@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Imports\LeadsImport;
 use App\Lead;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
 
@@ -61,7 +62,19 @@ class LeadsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Lead $lead, Request $request)
+    public function edit(Lead $lead)
+    {
+
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Lead $lead, Request $request)
     {
         $lead->firstname = $request->firstname;
         $lead->lastname = $request->lastname;
@@ -74,19 +87,7 @@ class LeadsController extends Controller
         }
         $lead->phone1 = $request->phone1;
         $lead->save();
-        return redirect(route('leads'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        return redirect()->route('lead.index')->with('message', 'Lead Atualizado!');
     }
 
     /**
@@ -98,12 +99,12 @@ class LeadsController extends Controller
     public function destroy(Lead $lead)
     {
         $lead->delete();
-        return redirect(route('leads'));
+        return redirect()->back()->with('message', 'Lead Apagado!');
     }
 
     public function import(Request $request)
     {
         Excel::import(new LeadsImport(), $request->file('file'));
-        return $this->index();
+        return redirect()->back()->with('message', 'A importação foi realizada com sucesso!');
     }
 }

@@ -5,7 +5,12 @@
 @section('content_header')
     <div class="row">
         <div class="col-12 d-flex justify-content-between align-items-center">
-            <h1 class="col-9 text-dark">Leads</h1>
+            <h1 class="col-2 text-dark">Leads</h1>
+            @if(session()->has('message'))
+                <div class="col-4 alert alert-default-dark">
+                    {{ session()->get('message') }}
+                </div>
+            @endif
             <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#modalImport">Importar</button>
             @include('admin.leads.modal.import')
         </div>
@@ -42,8 +47,8 @@
                                 <td>{{ $lead->lastname }}</td>
                                 <td>
                                     <div class="d-flex">
-                                        <a href="{{ route('formEditLead', $lead->id) }}" class="btn btn-xs btn-outline-dark">Detalhes</a>
-                                        <form action="{{route('destroyLead', $lead->id)}}" method="post">
+                                        <a href="{{ route('lead.show', $lead->id) }}" class="btn btn-xs btn-outline-dark">Detalhes</a>
+                                        <form action="{{route('lead.destroy', $lead->id)}}" method="post">
                                             @csrf
                                             @method('delete')
                                                 <input type="hidden" name="id" value="{{ $lead->id }}">
