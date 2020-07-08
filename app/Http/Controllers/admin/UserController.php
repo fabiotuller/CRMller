@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -15,7 +16,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+        return view('admin.system.users.index',compact('users'));
     }
 
     /**
@@ -25,7 +27,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.system.users.modal.new');
     }
 
     /**
@@ -36,7 +38,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return redirect()->route('user.index');
     }
 
     /**
@@ -47,7 +55,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return view('admin.system.users.edit',[
+            'user' => $user
+        ]);
     }
 
     /**
@@ -70,7 +80,15 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $user->name = $request->name;
+        if (filter_var($request->email, FILTER_VALIDATE_EMAIL)){
+            $user->email = $request->email;
+        }
+        if (!empty($request->password)){
+            $user->password = Hash::make($request->password);
+        }
+        $user->save();
+        return redirect(route('user.index'));
     }
 
     /**
@@ -81,6 +99,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect(route('user.index'));
     }
 }
