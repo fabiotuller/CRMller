@@ -40,7 +40,17 @@
                                 <td>{{ $lead->phone1 }}</td>
                                 <td>{{ $lead->firstname }}</td>
                                 <td>{{ $lead->lastname }}</td>
-                                <td><a href="#" class="btn btn-xs btn-outline-dark">Detalhes</a><a href="#" class="btn btn-xs btn-outline-danger ml-2">Apagar</a></td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a href="{{ route('formEditLead', $lead->id) }}" class="btn btn-xs btn-outline-dark">Detalhes</a>
+                                        <form action="{{route('destroyLead', $lead->id)}}" method="post">
+                                            @csrf
+                                            @method('delete')
+                                                <input type="hidden" name="id" value="{{ $lead->id }}">
+                                                <button class="btn btn-xs btn-outline-danger " onclick="return confirm('Você tem certeza que deseja excluir esse Lead?')"> Apagar</button>
+                                        </form>
+                                    </div>
+                                </td>
                             </tr>
                         @empty
                             <p>nenhum lead cadastrado!</p>

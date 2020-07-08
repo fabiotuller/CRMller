@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::get('/home',function (){
-    return redirect('/admin/home');
+    return redirect(route('home'));
 });
 
 Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth'],function (){
@@ -28,9 +28,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth
         return view('admin.home');
     })->name('home');
 
-    Route::get('leads/index', 'LeadsController@index')->name('leads');
-
     Route::post('leads/import','LeadsController@import')->name('leadsImport');
+    Route::get('leads/index', 'LeadsController@index')->name('leads');
+    Route::get('lead/edit/{lead}','LeadsController@show')->name('formEditLead');
+    Route::put('lead/editar/{lead}','LeadsController@edit')->name('editLead');
+    Route::delete('lead/destroy/{lead}','LeadsController@destroy')->name('destroyLead');
 
 });
 
