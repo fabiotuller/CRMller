@@ -5,9 +5,9 @@
 @section('content_header')
     <div class="row">
         <div class="col-12 d-flex justify-content-between align-items-center">
-            <h1 class="col-9 text-dark">Users</h1>
+            <h1 class="col-9 text-dark">Roles</h1>
             <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#modalImport">Cadastrar</button>
-            @include('admin.system.users.modal.new')
+            @include('admin.system.roles.modal.new')
         </div>
     </div>
 @stop
@@ -23,37 +23,31 @@
                         <tr role="row">
                             <th class="sorting" tabindex="0" rowspan="1" colspan="1">Id</th>
                             <th class="sorting" tabindex="0" rowspan="1" colspan="1">Name</th>
-                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">E-mail</th>
-                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Role_name</th>
+                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Label</th>
                             <th class="sorting" tabindex="0" rowspan="1" colspan="1">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
 
-                        @forelse($users as $user)
+                        @forelse($roles as $role)
                             <tr role="row" class="odd">
-                                <td tabindex="0" class="sorting_1"> {{ $user->id }} </td>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>
-                                    @for ($i = 0; $i < $roles->count(); $i++)
-                                        {{ $roles[$i]->id == $user->role_id ? $roles[$i]->name : '' }}
-                                    @endfor
-                                </td>
+                                <td tabindex="0" class="sorting_1">{{ $role->id }}</td>
+                                <td>{{ $role->name }}</td>
+                                <td>{{ $role->label }}</td>
                                 <td>
                                     <div class="d-flex">
-                                        <a href="{{ route('user.show', $user->id) }}" class="btn btn-xs btn-outline-dark">Detalhes</a>
-                                        <form action="{{route('user.destroy', $user->id)}}" method="post">
+                                        <a href="{{ route('role.show', $role->id) }}" class="btn btn-xs btn-outline-dark">Detalhes</a>
+                                        <form action="{{route('role.destroy', $role->id)}}" method="post">
                                             @csrf
                                             @method('delete')
-                                            <input type="hidden" name="id" value="{{ $user->id }}">
-                                            <button class="btn btn-xs btn-outline-danger " onclick="return confirm('Você tem certeza que deseja excluir esse Usuário?')"> Apagar</button>
+                                            <input type="hidden" name="id" value="{{ $role->id }}">
+                                            <button class="btn btn-xs btn-outline-danger " onclick="return confirm('Você tem certeza que deseja excluir essa Função?')"> Apagar</button>
                                         </form>
                                     </div>
                                 </td>
                             </tr>
                         @empty
-                            <p>Nenhum Usuário Cadastrado!</p>
+                            <p>Nenhuma Função Cadastrada!</p>
                         @endforelse
                         </tbody>
 
