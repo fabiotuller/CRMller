@@ -15,7 +15,7 @@ class ForeignUsersRole extends Migration
     {
         Schema::table('users',function ($table){
             $table->integer('role_id')->after('id')->unsigned()->default('1');
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('set default');
         });
     }
 

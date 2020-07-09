@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Role;
+use App\User;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -15,7 +16,11 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        $roles = Role::all();
+
+        return view('admin.system.roles.index',[
+            'roles' => $roles
+        ]);
     }
 
     /**
@@ -36,7 +41,12 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $role = new Role();
+        $role->name = $request->name;
+        $role->label = $request->label;
+        $role->save();
+
+        return redirect()->route('role.index');
     }
 
     /**
@@ -47,7 +57,9 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        //
+        return view('admin.system.roles.edit',[
+            'role' => $role
+        ]);
     }
 
     /**
@@ -70,7 +82,11 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        //
+        $role->name = $request->name;
+        $role->label = $request->label;
+        $role->save();
+
+        return redirect(route('role.index'));
     }
 
     /**
@@ -81,6 +97,13 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+        $users = User::all();
+        foreach ($users as $user) {
+            $user->role_id == $role->id ? $user->role_id = '1' : '';
+            $user->save();
+        }
+
+        $role->delete();
+        return redirect(route('role.index'));
     }
 }
