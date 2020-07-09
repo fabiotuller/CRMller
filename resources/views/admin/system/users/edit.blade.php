@@ -1,5 +1,6 @@
 @extends('adminlte::page')
 @section('content')
+
     <div class=" w-100 d-flex justify-content-between align-items-center">
         <ol class="breadcrumb small">
             <li class="breadcrumb-item"><a href="{{ route('user.index') }}"><i class="fa fa-dashboard"></i> Users</a></li>
@@ -47,6 +48,17 @@
                                         <label class="col-sm-2 col-form-label">Email</label>
                                         <div class="col-md-10">
                                             <input type="text" class="form-control" name="email" value="{{ $user->email }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-">Roles</label>
+                                        <div class="col-md-10">
+                                            <select class="form-control" name="role_id">
+                                                @foreach($roles as $r)
+                                                    <option {{ $r->id === $user->role_id ? 'selected' : '' }}
+                                                        value="{{ $r->id }}">{{ $r->name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">

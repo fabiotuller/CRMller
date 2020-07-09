@@ -34,6 +34,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth
     Route::resource('usuarios','UserController')->names('user')->parameters(['usuarios' => 'user']);
     Route::resource('leads','LeadsController')->names('lead')->parameters(['usuarios' => 'lead']);
     Route::post('leads/import','LeadsController@import')->name('lead.import');
+    Route::resource('roles','RoleController')->names('role');
+
 });
 
 Route::get('envio-email', function (){

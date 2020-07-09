@@ -24,6 +24,7 @@
                             <th class="sorting" tabindex="0" rowspan="1" colspan="1">Id</th>
                             <th class="sorting" tabindex="0" rowspan="1" colspan="1">Name</th>
                             <th class="sorting" tabindex="0" rowspan="1" colspan="1">E-mail</th>
+                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Role_name</th>
                             <th class="sorting" tabindex="0" rowspan="1" colspan="1">Actions</th>
                         </tr>
                         </thead>
@@ -34,6 +35,7 @@
                                 <td tabindex="0" class="sorting_1"> {{ $user->id }} </td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
+                                <td>{{ $roles[$user->role_id - 1]->name }}</td>
                                 <td>
                                     <div class="d-flex">
                                         <a href="{{ route('user.show', $user->id) }}" class="btn btn-xs btn-outline-dark">Detalhes</a>
