@@ -32,10 +32,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth
 
 Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth'], function(){
     Route::resource('usuarios','UserController')->names('user')->parameters(['usuarios' => 'user']);
-    Route::resource('leads','LeadsController')->names('lead')->parameters(['usuarios' => 'lead']);
-    Route::post('leads/import','LeadsController@import')->name('lead.import');
-    Route::get('leads/export/model','LeadsController@exportModel' )->name('lead.export.model');
+    Route::resource('leads','ContactsController')->names('lead');
+    Route::post('leads/import','ContactsController@import')->name('lead.import');
+    Route::get('leads/export/model','ContactsController@exportModel' )->name('lead.export.model');
     Route::resource('roles','RoleController')->names('role');
+    Route::resource('customers','CustomerController')->names('customer');
 
 });
 
