@@ -118,8 +118,6 @@ class ContactsController extends Controller
 
     public function import(Request $request)
     {
-        //Excel::import(new LeadsImport(), $request->file('file'));
-
         Excel::import(new LeadsImportRule(),$request->file('file'));
 
         return redirect()->back()->with('message', 'A importação foi realizada com sucesso!');

@@ -15,6 +15,7 @@ class LeadsImportRule implements ToCollection
             $contact = Contact::where('document', 'LIKE', $rows[$i][0])->first();
 
             if (isset($contact)){
+
                 Contact::where('id',$contact->id)->update([
                     'document' => $rows[$i][0],
                     'email' => $rows[$i][1],
@@ -26,7 +27,7 @@ class LeadsImportRule implements ToCollection
                     'firstname' => $rows[$i][7],
                     'lastname' => $rows[$i][8],
                 ]);
-            } else {
+            }else {
                 $contact = new Contact();
 
                 $contact->document = $rows[$i][0];
@@ -43,7 +44,7 @@ class LeadsImportRule implements ToCollection
             }
         }
 
-        return redirect()->route('lead.index')->with('message', 'Lead Atualizado!');
+        return redirect()->route('lead.index');
 
     }
 }
