@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\LeadsImportRule;
 use App\Imports\LeadsImport;
 use App\Contact;
 use Illuminate\Http\Request;
@@ -117,7 +118,10 @@ class ContactsController extends Controller
 
     public function import(Request $request)
     {
-        Excel::import(new LeadsImport(), $request->file('file'));
+        //Excel::import(new LeadsImport(), $request->file('file'));
+
+        Excel::import(new LeadsImportRule(),$request->file('file'));
+
         return redirect()->back()->with('message', 'A importação foi realizada com sucesso!');
     }
 
