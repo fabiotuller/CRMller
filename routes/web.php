@@ -34,6 +34,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth
     Route::resource('usuarios','UserController')->names('user')->parameters(['usuarios' => 'user']);
     Route::resource('leads','LeadsController')->names('lead')->parameters(['usuarios' => 'lead']);
     Route::post('leads/import','LeadsController@import')->name('lead.import');
+    Route::get('leads/export/model','LeadsController@exportModel' )->name('lead.export.model');
     Route::resource('roles','RoleController')->names('role');
 
 });

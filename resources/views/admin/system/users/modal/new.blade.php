@@ -26,6 +26,16 @@
                             <input type="password" class="form-control" name="password" value="">
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-">Roles</label>
+                        <div class="col-md-10">
+                            <select class="form-control" name="role_id">
+                                @foreach($roles as $r)
+                                    <option value="{{ $r->id }}">{{ $r->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                     <div class="card-footer">
                         <div class="pull-right float-right">
                             <button type="submit" class="btn btn-outline-info">Cadastrar</button>

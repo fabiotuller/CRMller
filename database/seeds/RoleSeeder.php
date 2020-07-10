@@ -12,6 +12,11 @@ class RoleSeeder extends Seeder
     public function run()
     {
         $data = [[
+                'name' => 'low_level',
+                'label' => 'first level access',
+                'created_at' => date("Y-m-d H:i:s",time()),
+                'updated_at' => date("Y-m-d H:i:s",time())
+                ],[
                 'name' => 'Administrator',
                 'label' => 'have all access system',
                 'created_at' => date("Y-m-d H:i:s",time()),

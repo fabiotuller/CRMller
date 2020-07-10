@@ -270,12 +270,12 @@ return [
             'submenu' => [
                 [
                     'text' => 'All Users',
-                    'icon' => 'fas fa-user-cog',
+                    'icon' => 'fas fa-fw fa-user',
                     'url'  => 'admin/usuarios',
                 ],
                 [
                     'text' => 'Roles',
-                    'icon' => 'fas fa-fw fa-user',
+                    'icon' => 'fas fa-user-cog',
                     'url'  => 'admin/roles',
                 ],
                 [

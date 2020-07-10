@@ -6,6 +6,7 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
+                <p>Precisa de um modelo de importação? <a href="{{ route('lead.export.model') }}">Clique Aqui!</a></p>
                 <form action="{{ route('lead.import') }}" method="post" enctype="multipart/form-data" class="btn btn-light">
                     <label>Selecione um arquivo: </label>
                     <input type="file" name="file">

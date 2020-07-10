@@ -26,7 +26,6 @@ class LeadsImport implements ToModel , WithHeadingRow
             'phone5' => $row['phone5'],
             'firstname' => $row['firstname'],
             'lastname' => $row['lastname'],
-            'ecommerce_id' => $row['ecommerce_id'],
         ]);
     }
 }
