@@ -37,33 +37,33 @@
                         </thead>
                         <tbody>
 
-                        @forelse($contacts as $contact)
+                        @forelse($leads as $lead)
                             <tr role="row" class="odd">
-                                <td tabindex="0" class="sorting_1"> {{ $contact->id }} </td>
-                                <td>{{ $contact->document }}</td>
-                                <td>{{ $contact->email }}</td>
-                                <td>{{ $contact->phone1 }}</td>
-                                <td>{{ $contact->firstname }}</td>
-                                <td>{{ $contact->lastname }}</td>
+                                <td tabindex="0" class="sorting_1"> {{ $lead->id }} </td>
+                                <td>{{ $lead->document }}</td>
+                                <td>{{ $lead->email }}</td>
+                                <td>{{ $lead->phone1 }}</td>
+                                <td>{{ $lead->firstname }}</td>
+                                <td>{{ $lead->lastname }}</td>
                                 <td>
                                     <div class="d-flex">
-                                        <a href="{{ route('lead.show', $contact->id) }}" class="btn btn-xs btn-outline-dark">Detalhes</a>
-                                        <form action="{{route('lead.destroy', $contact->id)}}" method="post">
+                                        <a href="{{ route('lead.show', $lead->id) }}" class="btn btn-xs btn-outline-dark">Detalhes</a>
+                                        <form action="{{route('lead.destroy', $lead->id)}}" method="post">
                                             @csrf
                                             @method('delete')
-                                                <input type="hidden" name="id" value="{{ $contact->id }}">
+                                                <input type="hidden" name="id" value="{{ $lead->id }}">
                                                 <button class="btn btn-xs btn-outline-danger " onclick="return confirm('Você tem certeza que deseja excluir esse Lead?')"> Apagar</button>
                                         </form>
                                     </div>
                                 </td>
                             </tr>
                         @empty
-                            <p>nenhum lead cadastrado!</p>
+                            <p>Nenhum Lead Cadastrado!</p>
                         @endforelse
                         </tbody>
                     </table>
                     <div class="d-flex justify-content-center mt-2">
-                        {{ $contacts->render() }}
+                        {{ $leads->render() }}
                     </div>
                 </div>
             </div>

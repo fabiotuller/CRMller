@@ -24,7 +24,7 @@ class CreateContactsTable extends Migration
             $table->text('phones_extra')->nullable();
             $table->string('firstname',100)->nullable();
             $table->string('lastname',100)->nullable();
-            $table->string('stage')->default('1 - lead');
+            $table->string('stage')->default('1 - Lead');
             $table->timestamps();
         });
     }

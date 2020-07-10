@@ -3,14 +3,14 @@
     <div class=" w-100 d-flex justify-content-between align-items-center">
         <ol class="breadcrumb small">
             <li class="breadcrumb-item"><a href="{{ route('lead.index') }}"><i class="fa fa-dashboard"></i> Leads</a></li>
-            <li class="breadcrumb-item"><a href="#"><i class="fa fa-dashboard"></i> {{ $contact->firstname . ' ' . $contact->lastname}}</a></li>
+            <li class="breadcrumb-item"><a href="#"><i class="fa fa-dashboard"></i> {{ $lead->firstname . ' ' . $lead->lastname}}</a></li>
             <li class="breadcrumb-item active">Editar</li>
         </ol>
-        <form action="{{route('lead.destroy', $contact->id)}}" method="post">
+        <form action="{{route('lead.destroy', $lead->id)}}" method="post">
             @csrf
             @method('delete')
             <div class="d-flex">
-                <input type="hidden" name="id" value="{{ $contact->id }}">
+                <input type="hidden" name="id" value="{{ $lead->id }}">
                 <button class="btn btn-outline-danger btn-sm m-1" onclick="return confirm('Você tem certeza que deseja excluir esse Lead?')"> Apagar</button>
             </div>
         </form>
@@ -21,10 +21,10 @@
                 <div class="card-header p-0 border-bottom-0">
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="pill" href="#home"> Dados Cadastrais</a>
+                            <a class="nav-link active" data-toggle="pill" href="#home"> Dados Principais</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="pill" href="#menu1"> Aba 2</a>
+                            <a class="nav-link" data-toggle="pill" href="#menu1"> Outros Contatos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="pill" href="#menu2"> Aba 3</a>
@@ -33,44 +33,44 @@
 
                     <div class="tab-content">
                         <div id="home" class="tab-pane fade active show">
-                            <form action="{{route('lead.update', $contact->id)}}" method="post" class="form-horizontal">
+                            <form action="{{route('lead.update', $lead->id)}}" method="post" class="form-horizontal">
                                 <div class="card-body">
                                     @csrf
                                     @method('put')
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Firstname</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" name="firstname" value="{{ $contact->firstname }}">
+                                            <input type="text" class="form-control" name="firstname" value="{{ $lead->firstname }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Lastname</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" name="lastname" value="{{ $contact->lastname }}">
+                                            <input type="text" class="form-control" name="lastname" value="{{ $lead->lastname }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Document</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" name="document" value="{{ $contact->document }}">
+                                            <input type="text" class="form-control" name="document" value="{{ $lead->document }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Email</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" name="email" value="{{ $contact->email }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Alternative Email</label>
-                                        <div class="col-md-10">
-                                            <input type="text" class="form-control" name="alternative_email" value="{{ $contact->alternative_email }}">
+                                            <input type="text" class="form-control" name="email" value="{{ $lead->email }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Phone</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" name="phone1" value="{{ $contact->phone1 }}">
+                                            <input type="text" class="form-control" name="phone1" value="{{ $lead->phone1 }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Stage</label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" readonly name="stage" value="{{ $lead->stage }}">
                                         </div>
                                     </div>
                                     <div class="card-footer">
@@ -82,8 +82,41 @@
                             </form>
                         </div>
                         <div id="menu1" class="tab-pane fade">
-                            <h3>Menu 1</h3>
-                            <p>Some content in menu 1.</p>
+                            <form action="{{route('lead.update', $lead->id)}}" method="post" class="form-horizontal">
+                                <div class="card-body">
+                                    @csrf
+                                    @method('put')
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Alternatives Emails</label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" name="emails_extra" value="{{ $lead->emails_extra }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Phone2</label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" name="phone2" value="{{ $lead->phone2 }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Phone3</label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" name="phone3" value="{{ $lead->phone3 }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Others Phones</label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" name="phones_extra" value="{{ $lead->phones_extra }}">
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="pull-right float-right">
+                                            <button type="submit" class="btn btn-info">Atualizar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                         <div id="menu2" class="tab-pane fade">
                             <h3>Menu 2</h3>

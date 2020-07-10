@@ -30,6 +30,7 @@
                             <th class="sorting" tabindex="0" rowspan="1" colspan="1">Phone</th>
                             <th class="sorting" tabindex="0" rowspan="1" colspan="1">Firstname</th>
                             <th class="sorting" tabindex="0" rowspan="1" colspan="1">Lastname</th>
+                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Stage</th>
                             <th class="sorting" tabindex="0" rowspan="1" colspan="1">Actions</th>
                         </tr>
                         </thead>
@@ -43,6 +44,7 @@
                                 <td>{{ $customer->phone1 }}</td>
                                 <td>{{ $customer->firstname }}</td>
                                 <td>{{ $customer->lastname }}</td>
+                                <td>{{ $customer->stage }}</td>
                                 <td>
                                     <div class="d-flex">
                                         <a href="{{ route('customer.show', $customer->id) }}" class="btn btn-xs btn-outline-dark">Detalhes</a>
@@ -56,7 +58,7 @@
                                 </td>
                             </tr>
                         @empty
-                            <p>nenhum Cliente cadastrado!</p>
+                            <p>Nenhum Cliente Cadastrado!</p>
                         @endforelse
                         </tbody>
                     </table>

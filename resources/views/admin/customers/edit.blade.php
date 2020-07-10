@@ -24,7 +24,7 @@
                             <a class="nav-link active" data-toggle="pill" href="#home"> Dados Cadastrais</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="pill" href="#menu1"> Aba 2</a>
+                            <a class="nav-link" data-toggle="pill" href="#menu1"> Outros Contatos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="pill" href="#menu2"> Aba 3</a>
@@ -62,15 +62,15 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Alternative Email</label>
-                                        <div class="col-md-10">
-                                            <input type="text" class="form-control" name="alternative_email" value="{{ $customer->alternative_email }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Phone</label>
                                         <div class="col-md-10">
                                             <input type="text" class="form-control" name="phone1" value="{{ $customer->phone1 }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Stage</label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" readonly name="stage" value="{{ $customer->stage }}">
                                         </div>
                                     </div>
                                     <div class="card-footer">
@@ -82,8 +82,41 @@
                             </form>
                         </div>
                         <div id="menu1" class="tab-pane fade">
-                            <h3>Menu 1</h3>
-                            <p>Some content in menu 1.</p>
+                            <form action="{{route('customer.update', $customer->id)}}" method="post" class="form-horizontal">
+                                <div class="card-body">
+                                    @csrf
+                                    @method('put')
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Alternatives Emails</label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" name="emails_extra" value="{{ $customer->emails_extra }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Phone2</label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" name="phone2" value="{{ $customer->phone2 }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Phone3</label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" name="phone3" value="{{ $customer->phone3 }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Others Phones</label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" name="phones_extra" value="{{ $customer->phones_extra }}">
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="pull-right float-right">
+                                            <button type="submit" class="btn btn-info">Atualizar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                         <div id="menu2" class="tab-pane fade">
                             <h3>Menu 2</h3>
