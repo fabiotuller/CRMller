@@ -6,9 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Imports\LeadsImport;
 use App\Lead;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\DB;
 
 class LeadsController extends Controller
 {
@@ -18,7 +16,7 @@ class LeadsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $leads = Lead::all();
+        $leads = Lead::paginate(15);
         return view('admin.leads.index',compact('leads'));
     }
 
@@ -106,5 +104,15 @@ class LeadsController extends Controller
     {
         Excel::import(new LeadsImport(), $request->file('file'));
         return redirect()->back()->with('message', 'A importação foi realizada com sucesso!');
+    }
+
+    public function exportModel()
+    {
+        $file = public_path('storage').'/modelImportLeads.xlsx';
+        $header = [
+          'Content-Type: application/xslx'
+        ];
+
+        return response()->download($file,'Model Import Leads.xlsx',$header);
     }
 }

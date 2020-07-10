@@ -270,12 +270,12 @@ return [
             'submenu' => [
                 [
                     'text' => 'All Users',
-                    'icon' => 'fas fa-user-cog',
+                    'icon' => 'fas fa-fw fa-user',
                     'url'  => 'admin/usuarios',
                 ],
                 [
                     'text' => 'Roles',
-                    'icon' => 'fas fa-fw fa-user',
+                    'icon' => 'fas fa-user-cog',
                     'url'  => 'admin/roles',
                 ],
                 [
@@ -319,7 +319,6 @@ return [
         JeroenNoten\LaravelAdminLte\Menu\Filters\HrefFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\SearchFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\ActiveFilter::class,
-        JeroenNoten\LaravelAdminLte\Menu\Filters\SubmenuFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\ClassesFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\GateFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\LangFilter::class,

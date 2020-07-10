@@ -3,16 +3,16 @@
 
     <div class=" w-100 d-flex justify-content-between align-items-center">
         <ol class="breadcrumb small">
-            <li class="breadcrumb-item"><a href="{{ route('user.index') }}"><i class="fa fa-dashboard"></i> Users</a></li>
-            <li class="breadcrumb-item"><a href="#"><i class="fa fa-dashboard"></i> {{ $user->name }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('role.index') }}"><i class="fa fa-dashboard"></i> Roles</a></li>
+            <li class="breadcrumb-item"><a href="#"><i class="fa fa-dashboard"></i> {{ $role->name }}</a></li>
             <li class="breadcrumb-item active">Editar</li>
         </ol>
-        <form action="{{route('user.destroy', $user->id)}}" method="post">
+        <form action="{{route('user.destroy', $role->id)}}" method="post">
             @csrf
             @method('delete')
             <div class="d-flex">
-                <input type="hidden" name="id" value="{{ $user->id }}">
-                <button class="btn btn-outline-danger btn-sm m-1" onclick="return confirm('Você tem certeza que deseja excluir esse Usuário?')"> Apagar</button>
+                <input type="hidden" name="id" value="{{ $role->id }}">
+                <button class="btn btn-outline-danger btn-sm m-1" onclick="return confirm('Você tem certeza que deseja excluir essa Função?')"> Apagar</button>
             </div>
         </form>
     </div>
@@ -34,37 +34,20 @@
 
                     <div class="tab-content">
                         <div id="home" class="tab-pane fade active show">
-                            <form action="{{route('user.update', $user->id)}}" method="post" class="form-horizontal">
+                            <form action="{{route('role.update', $role->id)}}" method="post" class="form-horizontal">
                                 <div class="card-body">
                                     @csrf
                                     @method('put')
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Name</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" name="name" value="{{ $user->name }}">
+                                            <input type="text" class="form-control" name="name" value="{{ $role->name }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Email</label>
+                                        <label class="col-sm-2 col-form-label">Label</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" name="email" value="{{ $user->email }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-">Roles</label>
-                                        <div class="col-md-10">
-                                            <select class="form-control" name="role_id">
-                                                @foreach($roles as $r)
-                                                    <option {{ $r->id === $user->role_id ? 'selected' : '' }}
-                                                        value="{{ $r->id }}">{{ $r->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Password</label>
-                                        <div class="col-md-10">
-                                            <input type="password" class="form-control" name="password">
+                                            <input type="text" class="form-control" name="label" value="{{ $role->label }}">
                                         </div>
                                     </div>
                                     <div class="card-footer">

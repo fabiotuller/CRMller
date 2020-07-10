@@ -61,19 +61,10 @@
                             <p>nenhum lead cadastrado!</p>
                         @endforelse
                         </tbody>
-                        <tfoot>
-                        <tr>
-                            <th rowspan="1" colspan="1">Id</th>
-                            <th rowspan="1" colspan="1">Document</th>
-                            <th rowspan="1" colspan="1">E-mail</th>
-                            <th rowspan="1" colspan="1">Phone</th>
-                            <th rowspan="1" colspan="1">Firstname</th>
-                            <th rowspan="1" colspan="1">Lastname</th>
-                            <th rowspan="1" colspan="1">Actions</th>
-                        </tr>
-                        </tfoot>
                     </table>
-
+                    <div class="d-flex justify-content-center mt-2">
+                        {{ $leads->render() }}
+                    </div>
                 </div>
             </div>
         </div>
