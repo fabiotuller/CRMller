@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLeadsTable extends Migration
+class CreateContactsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,18 @@ class CreateLeadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('leads', function (Blueprint $table) {
-            $table->id();
+        Schema::create('contacts', function (Blueprint $table) {
+            $table->increments('id')->unsigned();
             $table->bigInteger('document');
             $table->string('email')->nullable();
-            $table->string('alternative_email')->nullable();
+            $table->text('emails_extra')->nullable();
             $table->string('phone1',15)->nullable();
             $table->string('phone2',15)->nullable();
             $table->string('phone3',15)->nullable();
-            $table->string('phone4',15)->nullable();
-            $table->string('phone5',15)->nullable();
+            $table->text('phones_extra')->nullable();
             $table->string('firstname',100)->nullable();
             $table->string('lastname',100)->nullable();
-            $table->integer('ecommerce_id')->nullable();
+            $table->string('stage')->default('1 - lead');
             $table->timestamps();
         });
     }
@@ -37,6 +36,6 @@ class CreateLeadsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('leads');
+        Schema::dropIfExists('contacts');
     }
 }

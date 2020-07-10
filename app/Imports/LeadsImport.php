@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use App\Lead;
+use App\Contact;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -15,15 +15,14 @@ class LeadsImport implements ToModel , WithHeadingRow
     */
     public function model(array $row)
     {
-        return new Lead([
+        return new Contact([
             'document' => $row['document'],
             'email' => $row['email'],
-            'alternative_email' => $row['alternative_email'],
+            'emails_extra' => $row['emails_extra'],
             'phone1' => $row['phone1'],
             'phone2' => $row['phone2'],
             'phone3' => $row['phone3'],
-            'phone4' => $row['phone4'],
-            'phone5' => $row['phone5'],
+            'phones_extra' => $row['phones_extra'],
             'firstname' => $row['firstname'],
             'lastname' => $row['lastname'],
         ]);

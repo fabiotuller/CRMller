@@ -2,16 +2,16 @@
 @section('content')
     <div class=" w-100 d-flex justify-content-between align-items-center">
         <ol class="breadcrumb small">
-            <li class="breadcrumb-item"><a href="{{ route('lead.index') }}"><i class="fa fa-dashboard"></i> Leads</a></li>
-            <li class="breadcrumb-item"><a href="#"><i class="fa fa-dashboard"></i> {{ $contact->firstname . ' ' . $contact->lastname}}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('customer.index') }}"><i class="fa fa-dashboard"></i> Customer</a></li>
+            <li class="breadcrumb-item"><a href="#"><i class="fa fa-dashboard"></i> {{ $customer->firstname . ' ' . $customer->lastname}}</a></li>
             <li class="breadcrumb-item active">Editar</li>
         </ol>
-        <form action="{{route('lead.destroy', $contact->id)}}" method="post">
+        <form action="{{route('customer.destroy', $customer->id)}}" method="post">
             @csrf
             @method('delete')
             <div class="d-flex">
-                <input type="hidden" name="id" value="{{ $contact->id }}">
-                <button class="btn btn-outline-danger btn-sm m-1" onclick="return confirm('Você tem certeza que deseja excluir esse Lead?')"> Apagar</button>
+                <input type="hidden" name="id" value="{{ $customer->id }}">
+                <button class="btn btn-outline-danger btn-sm m-1" onclick="return confirm('Você tem certeza que deseja excluir esse Cliente?')"> Apagar</button>
             </div>
         </form>
     </div>
@@ -33,44 +33,44 @@
 
                     <div class="tab-content">
                         <div id="home" class="tab-pane fade active show">
-                            <form action="{{route('lead.update', $contact->id)}}" method="post" class="form-horizontal">
+                            <form action="{{route('customer.update', $customer->id)}}" method="post" class="form-horizontal">
                                 <div class="card-body">
                                     @csrf
                                     @method('put')
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Firstname</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" name="firstname" value="{{ $contact->firstname }}">
+                                            <input type="text" class="form-control" name="firstname" value="{{ $customer->firstname }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Lastname</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" name="lastname" value="{{ $contact->lastname }}">
+                                            <input type="text" class="form-control" name="lastname" value="{{ $customer->lastname }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Document</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" name="document" value="{{ $contact->document }}">
+                                            <input type="text" class="form-control" name="document" value="{{ $customer->document }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Email</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" name="email" value="{{ $contact->email }}">
+                                            <input type="text" class="form-control" name="email" value="{{ $customer->email }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Alternative Email</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" name="alternative_email" value="{{ $contact->alternative_email }}">
+                                            <input type="text" class="form-control" name="alternative_email" value="{{ $customer->alternative_email }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Phone</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" name="phone1" value="{{ $contact->phone1 }}">
+                                            <input type="text" class="form-control" name="phone1" value="{{ $customer->phone1 }}">
                                         </div>
                                     </div>
                                     <div class="card-footer">

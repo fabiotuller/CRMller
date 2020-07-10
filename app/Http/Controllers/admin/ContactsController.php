@@ -4,11 +4,11 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Imports\LeadsImport;
-use App\Lead;
+use App\Contact;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
-class LeadsController extends Controller
+class ContactsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class LeadsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $leads = Lead::paginate(15);
-        return view('admin.leads.index',compact('leads'));
+        $contacts = Contact::where('stage','LIKE','1%')->paginate(15);
+        return view('admin.leads.index',compact('contacts'));
     }
 
     /**
@@ -47,10 +47,10 @@ class LeadsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Lead $lead)
+    public function show(Contact $contact)
     {
         return view('admin.leads.edit',[
-            'lead' => $lead
+            'lead' => $contact
         ]);
     }
 
@@ -60,7 +60,7 @@ class LeadsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Lead $lead)
+    public function edit(Contact $contact)
     {
 
     }
@@ -72,19 +72,19 @@ class LeadsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Lead $lead, Request $request)
+    public function update(Contact $contact, Request $request)
     {
-        $lead->firstname = $request->firstname;
-        $lead->lastname = $request->lastname;
-        $lead->document = $request->document;
+        $contact->firstname = $request->firstname;
+        $contact->lastname = $request->lastname;
+        $contact->document = $request->document;
         if (filter_var($request->email, FILTER_VALIDATE_EMAIL)){
-            $lead->email = $request->email;
+            $contact->email = $request->email;
         }
         if (filter_var($request->email, FILTER_VALIDATE_EMAIL)){
-            $lead->alternative_email = $request->alternative_email;
+            $contact->alternative_email = $request->alternative_email;
         }
-        $lead->phone1 = $request->phone1;
-        $lead->save();
+        $contact->phone1 = $request->phone1;
+        $contact->save();
         return redirect()->route('lead.index')->with('message', 'Lead Atualizado!');
     }
 
@@ -94,9 +94,9 @@ class LeadsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Lead $lead)
+    public function destroy(Contact $contact)
     {
-        $lead->delete();
+        $contact->delete();
         return redirect()->back()->with('message', 'Lead Apagado!');
     }
 
