@@ -4,8 +4,8 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Imports\LeadsImportRule;
-use App\Imports\LeadsImport;
 use App\Contact;
+use App\Receitaws;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -50,8 +50,11 @@ class ContactsController extends Controller
      */
     public function show(Contact $lead)
     {
+        $receitaws = $lead->relReceitaws()->first();
+
         return view('admin.leads.edit',[
-            'lead' => $lead
+            'lead' => $lead,
+            'receitaws' => $receitaws
         ]);
     }
 
@@ -84,18 +87,13 @@ class ContactsController extends Controller
                 $lead->email = $request->email;
             }
             $lead->phone1 = $request->phone1;
-            $lead->save();
-
-            return redirect()->route('lead.index')->with('message', 'Lead Atualizado!');
-
-        }elseif (isset($request->emails_extra) || isset($request->phone2) || isset($request->phone3) || isset($request->phones_extra)){
-
             if (filter_var($request->emails_extra, FILTER_VALIDATE_EMAIL)){
                 $lead->emails_extra = $request->emails_extra;
             }
             $lead->phone2 = $request->phone2;
             $lead->phone3 = $request->phone3;
             $lead->phones_extra = $request->phones_extra;
+
             $lead->save();
 
             return redirect()->route('lead.index')->with('message', 'Lead Atualizado!');

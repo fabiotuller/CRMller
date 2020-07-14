@@ -48,8 +48,11 @@ class CustomerController extends Controller
      */
     public function show(Contact $customer)
     {
+        $receitaws = $customer->relReceitaws()->first();
+
         return view('admin.customers.edit',[
-            'customer' => $customer
+            'customer' => $customer,
+            'receitaws' => $receitaws
         ]);
     }
 
