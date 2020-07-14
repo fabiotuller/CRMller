@@ -23,11 +23,11 @@
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="pill" href="#home"> Dados Cadastrais</a>
                         </li>
+{{--                        <li class="nav-item">--}}
+{{--                            <a class="nav-link" data-toggle="pill" href="#menu1"> Outros Contatos</a>--}}
+{{--                        </li>--}}
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="pill" href="#menu1"> Outros Contatos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="pill" href="#menu2"> Aba 3</a>
+                            <a class="nav-link" data-toggle="pill" href="#menu2"> Receita WS</a>
                         </li>
                     </ul>
 
@@ -38,76 +38,61 @@
                                     @csrf
                                     @method('put')
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Firstname</label>
-                                        <div class="col-md-10">
+                                        <label class="col-sm-1 col-form-label">Firstname</label>
+                                        <div class="col-md-5">
                                             <input type="text" class="form-control" name="firstname" value="{{ $customer->firstname }}">
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Lastname</label>
-                                        <div class="col-md-10">
+
+                                        <label class="col-sm-1 col-form-label">Lastname</label>
+                                        <div class="col-md-5">
                                             <input type="text" class="form-control" name="lastname" value="{{ $customer->lastname }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Document</label>
-                                        <div class="col-md-10">
+                                        <label class="col-sm-1 col-form-label">Document</label>
+                                        <div class="col-md-5">
                                             <input type="text" class="form-control" name="document" value="{{ $customer->document }}">
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Email</label>
-                                        <div class="col-md-10">
+
+                                        <label class="col-sm-1 col-form-label">Email</label>
+                                        <div class="col-md-5">
                                             <input type="text" class="form-control" name="email" value="{{ $customer->email }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Phone</label>
-                                        <div class="col-md-10">
+                                        <label class="col-sm-1 col-form-label">Phone</label>
+                                        <div class="col-md-5">
                                             <input type="text" class="form-control" name="phone1" value="{{ $customer->phone1 }}">
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Stage</label>
-                                        <div class="col-md-10">
+
+                                        <label class="col-sm-1 col-form-label">Stage</label>
+                                        <div class="col-md-5">
                                             <input type="text" class="form-control" readonly name="stage" value="{{ $customer->stage }}">
                                         </div>
                                     </div>
-                                    <div class="card-footer">
-                                        <div class="pull-right float-right">
-                                            <button type="submit" class="btn btn-info">Atualizar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div id="menu1" class="tab-pane fade">
-                            <form action="{{route('customer.update', $customer->id)}}" method="post" class="form-horizontal">
-                                <div class="card-body">
-                                    @csrf
-                                    @method('put')
+                                    <hr>
+
+                                    <label class="h4">Outros Contatos</label>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Alternatives Emails</label>
-                                        <div class="col-md-10">
-                                            <input type="text" class="form-control" name="emails_extra" value="{{ $customer->emails_extra }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Phone2</label>
-                                        <div class="col-md-10">
+                                        <label class="col-sm-1 col-form-label">Phone2</label>
+                                        <div class="col-md-5">
                                             <input type="text" class="form-control" name="phone2" value="{{ $customer->phone2 }}">
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Phone3</label>
-                                        <div class="col-md-10">
+
+                                        <label class="col-sm-1 col-form-label">Phone3</label>
+                                        <div class="col-md-5">
                                             <input type="text" class="form-control" name="phone3" value="{{ $customer->phone3 }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Others Phones</label>
-                                        <div class="col-md-10">
+                                        <label class="col-sm-1 col-form-label">Others Phones</label>
+                                        <div class="col-md-5">
                                             <input type="text" class="form-control" name="phones_extra" value="{{ $customer->phones_extra }}">
+                                        </div>
+
+                                        <label class="col-sm-1 col-form-label">Alternatives Emails</label>
+                                        <div class="col-md-5">
+                                            <input type="text" class="form-control" name="emails_extra" value="{{ $customer->emails_extra }}">
                                         </div>
                                     </div>
                                     <div class="card-footer">
@@ -118,9 +103,151 @@
                                 </div>
                             </form>
                         </div>
+{{--                        <div id="menu1" class="tab-pane fade">--}}
+{{--                            <form action="{{route('customer.update', $customer->id)}}" method="post" class="form-horizontal">--}}
+{{--                                <div class="card-body">--}}
+{{--                                    @csrf--}}
+{{--                                    @method('put')--}}
+{{--                                    --}}
+{{--                                    <div class="card-footer">--}}
+{{--                                        <div class="pull-right float-right">--}}
+{{--                                            <button type="submit" class="btn btn-info">Atualizar</button>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </form>--}}
+{{--                        </div>--}}
                         <div id="menu2" class="tab-pane fade">
-                            <h3>Menu 2</h3>
-                            <p>Some content in menu 2.</p>
+                            <form action="" method="post" class="form-horizontal">
+                                <div class="card-body">
+                                    @csrf
+                                    @method('put')
+
+                                    <div class="{{ $receitaws->status == 'OK' ? 'btn-success' : 'btn-danger' }} row float-right btn mb-3 bg-gradient-light">
+                                        <label class="mr-3">Consulta: {{ $receitaws->status }}</label>
+
+                                        <label class="{{ $receitaws->status == 'OK' ? 'd-none' : '' }} mr-3">Mensagem: {{ $receitaws->message }}</label>
+
+                                        <label class="mr-3">Dt Última Consulta: {{ $receitaws->updated_at }}</label>
+
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-1 col-form-label">Razão Social</label>
+                                        <div class="col-md-5">
+                                            <input type="text" class="form-control" name="nome" readonly value="{{ $receitaws->nome }}">
+                                        </div>
+
+                                        <label class="col-1 col-form-label">Nome Fantasia</label>
+                                        <div class="col-md-5">
+                                            <input type="text" class="form-control" name="nome" readonly value="{{ $receitaws->fantasia }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-1 col-form-label">CNPJ</label>
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control" name="nome" readonly value="{{ $receitaws->cnpj }}">
+                                        </div>
+
+                                        <label class="col-1 col-form-label">Tipo</label>
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control" name="nome" readonly value="{{ $receitaws->tipo }}">
+                                        </div>
+
+                                        <label class="col-1 col-form-label">Dt de Abertura</label>
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control" name="nome" readonly value="{{ $receitaws->abertura }}">
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-1 col-form-label">Situação</label>
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control" name="nome" readonly value="{{ $receitaws->situacao }}">
+                                        </div>
+
+                                        <label class="col-1 col-form-label">Dt Situação</label>
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control" name="nome" readonly value="{{ $receitaws->data_situacao }}">
+                                        </div>
+
+                                        <label class="col-1 col-form-label">Email</label>
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control" name="nome" readonly value="{{ $receitaws->email }}">
+                                        </div>
+
+                                        <label class="col-1 col-form-label">Telefone</label>
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control" name="nome" readonly value="{{ $receitaws->telefone }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Natureza Jurídica</label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="nome" readonly value="{{ $receitaws->natureza_juridica }}">
+                                        </div>
+
+                                        <label class="col-sm-1 col-form-label">Capital Social</label>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="nome" readonly value="{{ isset($receitaws->capital_social) ? 'R$ ' . $receitaws->capital_social : '' }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Atividade Principal</label>
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control" name="nome" readonly value="{{ $receitaws->atividade_principal_code }}">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" name="nome" readonly value="{{ $receitaws->atividade_principal_text }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Atividade Secundária</label>
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control" name="nome" readonly value="{{ $receitaws->atividades_secundarias_code }}">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" name="nome" readonly value="{{ $receitaws->atividades_secundarias_text }}">
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <label class="h4 mb-3">Endereço</label>
+                                    <div class="form-group row">
+                                        <label class="col-1 col-form-label">Rua</label>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" name="nome" readonly value="{{ $receitaws->logradouro }}">
+                                        </div>
+
+                                        <label class="col-1 col-form-label">Número</label>
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control" name="nome" readonly value="{{ $receitaws->numero }}">
+                                        </div>
+
+                                        <label class="col-1 col-form-label">Complemento</label>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="nome" readonly value="{{ $receitaws->complemento }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-1 col-form-label">Bairro</label>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" name="nome" readonly value="{{ $receitaws->bairro }}">
+                                        </div>
+
+                                        <label class="col-1 col-form-label">Município</label>
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control" name="nome" readonly value="{{ $receitaws->municipio }}">
+                                        </div>
+
+                                        <label class="col-1 col-form-label">UF</label>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="nome" readonly value="{{ $receitaws->uf }}">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
