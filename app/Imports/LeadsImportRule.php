@@ -14,16 +14,16 @@ class LeadsImportRule implements ToCollection
     public function collection(Collection $rows)
     {
         for ($i=1 ; $i <= $rows->count() -1 ;$i++) {
-            $contact = Contact::withTrashed()->where('document', 'LIKE', $rows[$i][0])->first();
+            $contact = Contact::withTrashed()->where('document', '=', $rows[$i][0])->first();
 
             if (isset($contact)){
 
                 Contact::withTrashed()->where('id',$contact->id)->update([
-                    'document' => $rows[$i][0],
-                    'email' => $rows[$i][1],
-                    'emails_extra' => $rows[$i][2],
-                    'firstname' => $rows[$i][6],
-                    'lastname' => $rows[$i][7],
+                    //'document' => ''.$rows[$i][0].'',
+                    //'email' => $rows[$i][1],
+                    //'emails_extra' => $rows[$i][2],
+                    'firstname' => empty($rows[$i][6]) ? $contact->firstname : $rows[$i][6],
+                    'lastname' => empty($rows[$i][7]) ? $contact->lastname : $rows[$i][7],
                     'deleted_at' => NULL
                 ]);
 
@@ -43,7 +43,7 @@ class LeadsImportRule implements ToCollection
                 $phones = $contact->relContactPhone()->get()->where('phone','LIKE',Strings::phone($rows[$i][4]));
 
                 if (count($phones) == 0){
-                    if (!empty($rows[$i][3])){
+                    if (!empty($rows[$i][4])){
                         $contact_phones = new ContactPhone();
                         $contact_phones->phone = $rows[$i][4];
                         $contact_phones->contact_id = $contact->id;
@@ -55,7 +55,7 @@ class LeadsImportRule implements ToCollection
                 $phones = $contact->relContactPhone()->get()->where('phone','LIKE',Strings::phone($rows[$i][5]));
 
                 if (count($phones) == 0){
-                    if (!empty($rows[$i][3])){
+                    if (!empty($rows[$i][5])){
                         $contact_phones = new ContactPhone();
                         $contact_phones->phone = $rows[$i][5];
                         $contact_phones->contact_id = $contact->id;
@@ -64,16 +64,6 @@ class LeadsImportRule implements ToCollection
                 }
 
                 $phones = NULL;
-
-//                $phones = $contact->relContactPhone()->get();
-//
-//                foreach ($phones as $phone){
-//                    ContactPhone::where('id',$phone->id)->update([
-//                        'phone' => $rows[$i][3]
-//                    ]);
-//                    dump($phone);
-//                }
-//                die();
 
             }else {
                 $contact = new Contact();

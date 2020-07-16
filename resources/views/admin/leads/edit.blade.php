@@ -65,11 +65,11 @@
                                     <div class="form-group row">
                                         <label class="col-sm-1 col-form-label">Phone</label>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control" name="{{ 'phoneid' . $contactPhone[0]->id }}" value="{{ sizeof($contactPhone) == 0 ? '' : $contactPhone[0]->phone }}">
+                                            <input type="text" class="form-control" name="{{sizeof($contactPhone) == 0 ? 'phoneid' :  'phoneid' . $contactPhone[0]->id }}" value="{{ sizeof($contactPhone) == 0 ? '' : $contactPhone[0]->phone }}">
                                         </div>
                                         <label class="col-form-label">Rating</label>
                                         <div class="col-md-1 mr-4">
-                                            <input type="text" class="form-control" name="{{ 'ratingid' . $contactPhone[0]->id }}" value="{{ sizeof($contactPhone) == 0 ? '' : $contactPhone[0]->rating }}">
+                                            <input type="text" class="form-control" name="{{sizeof($contactPhone) == 0 ? 'ratingid' :  'ratingid' . $contactPhone[0]->id }}" value="{{ sizeof($contactPhone) == 0 ? '' : $contactPhone[0]->rating }}">
                                         </div>
 
                                         <label class="ml-md-5 col-sm-1 col-form-label">Stage</label>
