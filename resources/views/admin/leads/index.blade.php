@@ -42,7 +42,7 @@
                                 <td tabindex="0" class="sorting_1"> {{ $lead->id }} </td>
                                 <td>{{ $lead->document }}</td>
                                 <td>{{ $lead->email }}</td>
-                                <td>{{ $lead->relContactPhone[0]->phone }}</td>
+                                <td>{{ sizeof($lead->relContactPhone) == 0 ? '' : $lead->relContactPhone[0]->phone }}</td>
                                 <td>{{ $lead->firstname }}</td>
                                 <td>{{ $lead->lastname }}</td>
                                 <td>

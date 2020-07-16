@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Helpers\Strings;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ContactsRequest;
 use App\Imports\LeadsImportRule;
@@ -96,9 +97,17 @@ class ContactsController extends Controller
 
         $phones = $lead->relContactPhone()->get();
 
+        if (count($phones) == 0){
+            $newphone = new ContactPhone();
+            $newphone->phone = $request['phoneid'];
+            $newphone->rating = $request['ratingid'];
+            $newphone->contact_id = $lead->id;
+            $newphone->save();
+        }
+
             foreach ($phones as $phone){
                 ContactPhone::where('id',$phone->id)->update([
-                    'phone' => $request['phoneid'.$phone->id]
+                    'phone' => Strings::phone($request['phoneid'.$phone->id])
                 ]);
                 ContactPhone::where('id',$phone->id)->update([
                     'rating' => $request['ratingid'.$phone->id]

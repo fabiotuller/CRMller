@@ -56,16 +56,23 @@
 
                                         <label class="col-sm-1 col-form-label">Email</label>
                                         <div class="col-md-5">
-                                            <input type="text" class="form-control" name="email" value="{{ $customer->email }}">
+                                            <input type="text" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" name="email" value="{{ $customer->email }}">
+                                            @if($errors->has('email'))
+                                                <div class="text-danger">{{ $errors->first('email') }}</div>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-1 col-form-label">Phone</label>
-                                        <div class="col-md-5">
-                                            <input type="text" class="form-control" name="phone1" value="{{ $customer->phone1 }}">
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="{{ sizeof($contactPhone) == 0 ? 'phoneid' : 'phoneid' . $contactPhone[0]->id }}" value="{{ sizeof($contactPhone) == 0 ? '' : $contactPhone[0]->phone }}">
+                                        </div>
+                                        <label class="col-form-label">Rating</label>
+                                        <div class="col-md-1 mr-4">
+                                            <input type="text" class="form-control" name="{{ sizeof($contactPhone) == 0 ? 'ratingid' : 'ratingid' . $contactPhone[0]->id }}" value="{{ sizeof($contactPhone) == 0 ? '' : $contactPhone[0]->rating }}">
                                         </div>
 
-                                        <label class="col-sm-1 col-form-label">Stage</label>
+                                        <label class="ml-md-5 col-sm-1 col-form-label">Stage</label>
                                         <div class="col-md-5">
                                             <input type="text" class="form-control" readonly name="stage" value="{{ $customer->stage }}">
                                         </div>
@@ -73,26 +80,29 @@
                                     <hr>
 
                                     <label class="h4">Outros Contatos</label>
+                                    @php($i = 0)
+                                    @foreach($contactPhone as $phone)
+                                        @if($i <> 0 AND $i < 5)
+                                            <div class="form-group row">
+                                                <label class="col-sm-1 col-form-label">{{ 'Phone ' . $i}}</label>
+                                                <div class="col-md-3">
+                                                    <input type="text" class="form-control" name="{{ 'phoneid' . $phone->id }}" value="{{ $phone->phone }}">
+                                                </div>
+                                                <label class="col-form-label">Rating</label>
+                                                <div class="col-md-1 mr-4">
+                                                    <input type="text" class="form-control" name="{{ 'ratingid' . $phone->id }}" value="{{ $phone->rating }}">
+                                                </div>
+                                            </div>
+                                        @endif()
+                                        @php($i++)
+                                    @endforeach
                                     <div class="form-group row">
-                                        <label class="col-sm-1 col-form-label">Phone2</label>
-                                        <div class="col-md-5">
-                                            <input type="text" class="form-control" name="phone2" value="{{ $customer->phone2 }}">
-                                        </div>
-
-                                        <label class="col-sm-1 col-form-label">Phone3</label>
-                                        <div class="col-md-5">
-                                            <input type="text" class="form-control" name="phone3" value="{{ $customer->phone3 }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-1 col-form-label">Others Phones</label>
-                                        <div class="col-md-5">
-                                            <input type="text" class="form-control" name="phones_extra" value="{{ $customer->phones_extra }}">
-                                        </div>
-
                                         <label class="col-sm-1 col-form-label">Alternatives Emails</label>
                                         <div class="col-md-5">
-                                            <input type="text" class="form-control" name="emails_extra" value="{{ $customer->emails_extra }}">
+                                            <input type="text" class="form-control {{ $errors->has('emails_extra') ? 'is-invalid' : '' }}" name="emails_extra" value="{{ $customer->emails_extra }}">
+                                            @if($errors->has('emails_extra'))
+                                                <div class="text-danger">{{ $errors->first('emails_extra') }}</div>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="card-footer">
