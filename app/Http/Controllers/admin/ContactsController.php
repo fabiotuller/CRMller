@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Helpers\Strings;
 use App\Http\Controllers\Controller;
-use App\Imports\LeadsImport;
+use App\Http\Requests\ContactsRequest;
+use App\Imports\LeadsImportRule;
 use App\Contact;
+use App\ContactPhone;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -16,8 +19,13 @@ class ContactsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $leads = Contact::where('stage','LIKE','1%')->paginate(15);
-        return view('admin.leads.index',compact('leads'));
+        $leads = Contact::where('stage','LIKE','1%')->with(['relContactPhone' => function($query){
+            $query->orderBy('rating','DESC');
+        }])->paginate(15);
+
+        return view('admin.leads.index',[
+            'leads'         => $leads
+        ]);
     }
 
     /**
@@ -49,8 +57,13 @@ class ContactsController extends Controller
      */
     public function show(Contact $lead)
     {
+        $receitaws = $lead->relReceitaws()->first();
+        $contactPhone = $lead->relContactPhone()->orderBy('rating','DESC')->get();
+
         return view('admin.leads.edit',[
-            'lead' => $lead
+            'lead'              => $lead,
+            'receitaws'         => $receitaws,
+            'contactPhone'      => $contactPhone
         ]);
     }
 
@@ -72,34 +85,36 @@ class ContactsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Contact $lead, Request $request)
+    public function update(Contact $lead, ContactsRequest $request)
     {
-        if (isset($request->firstname)){
+        $lead->firstname = $request->firstname;
+        $lead->lastname = $request->lastname;
+        $lead->document = $request->document;
+        $lead->email = $request->email;
+        $lead->emails_extra = $request->emails_extra;
 
-            $lead->firstname = $request->firstname;
-            $lead->lastname = $request->lastname;
-            $lead->document = $request->document;
-            if (filter_var($request->email, FILTER_VALIDATE_EMAIL)){
-                $lead->email = $request->email;
-            }
-            $lead->phone1 = $request->phone1;
-            $lead->save();
+        $lead->save();
 
-            return redirect()->route('lead.index')->with('message', 'Lead Atualizado!');
+        $phones = $lead->relContactPhone()->get();
 
-        }elseif (isset($request->emails_extra) || isset($request->phone2) || isset($request->phone3) || isset($request->phones_extra)){
-
-            if (filter_var($request->emails_extra, FILTER_VALIDATE_EMAIL)){
-                $lead->emails_extra = $request->emails_extra;
-            }
-            $lead->phone2 = $request->phone2;
-            $lead->phone3 = $request->phone3;
-            $lead->phones_extra = $request->phones_extra;
-            $lead->save();
-
-            return redirect()->route('lead.index')->with('message', 'Lead Atualizado!');
-
+        if (count($phones) == 0){
+            $newphone = new ContactPhone();
+            $newphone->phone = $request['phoneid'];
+            $newphone->rating = $request['ratingid'];
+            $newphone->contact_id = $lead->id;
+            $newphone->save();
         }
+
+            foreach ($phones as $phone){
+                ContactPhone::where('id',$phone->id)->update([
+                    'phone' => Strings::phone($request['phoneid'.$phone->id])
+                ]);
+                ContactPhone::where('id',$phone->id)->update([
+                    'rating' => $request['ratingid'.$phone->id]
+                ]);
+            }
+
+        return redirect()->route('lead.index')->with('message', 'Lead Atualizado!');
 
     }
 
@@ -117,7 +132,8 @@ class ContactsController extends Controller
 
     public function import(Request $request)
     {
-        Excel::import(new LeadsImport(), $request->file('file'));
+        Excel::import(new LeadsImportRule(),$request->file('file'));
+
         return redirect()->back()->with('message', 'A importação foi realizada com sucesso!');
     }
 

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\ContactPhone;
+use App\Helpers\Strings;
 use App\Http\Controllers\Controller;
 use App\Contact;
+use App\Http\Requests\ContactsRequest;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -15,8 +18,13 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Contact::where('stage','NOT LIKE','1%')->paginate(15);
-        return view('admin.customers.index',compact('customers'));
+        $customers = Contact::where('stage','NOT LIKE','1%')->with(['relContactPhone' => function($query){
+            $query->orderBy('rating','DESC');
+        }])->paginate(15);
+
+        return view('admin.customers.index',[
+            'customers'         => $customers
+        ]);
     }
 
     /**
@@ -48,8 +56,13 @@ class CustomerController extends Controller
      */
     public function show(Contact $customer)
     {
+        $receitaws = $customer->relReceitaws()->first();
+        $contactPhone = $customer->relContactPhone()->orderBy('rating','DESC')->get();
+
         return view('admin.customers.edit',[
-            'customer' => $customer
+            'customer'          => $customer,
+            'receitaws'         => $receitaws,
+            'contactPhone'      => $contactPhone
         ]);
     }
 
@@ -71,34 +84,36 @@ class CustomerController extends Controller
      * @param  \App\Contact  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Contact $customer)
+    public function update(Contact $customer, ContactsRequest $request)
     {
-        if (isset($request->firstname)){
+        $customer->firstname = $request->firstname;
+        $customer->lastname = $request->lastname;
+        $customer->document = $request->document;
+        $customer->email = $request->email;
+        $customer->emails_extra = $request->emails_extra;
 
-            $customer->firstname = $request->firstname;
-            $customer->lastname = $request->lastname;
-            $customer->document = $request->document;
-            if (filter_var($request->email, FILTER_VALIDATE_EMAIL)){
-                $customer->email = $request->email;
-            }
-            $customer->phone1 = $request->phone1;
-            $customer->save();
+        $customer->save();
 
-            return redirect()->route('customer.index')->with('message', 'Lead Atualizado!');
+        $phones = $customer->relContactPhone()->get();
 
-        }elseif (isset($request->emails_extra) || isset($request->phone2) || isset($request->phone3) || isset($request->phones_extra)){
-
-            if (filter_var($request->emails_extra, FILTER_VALIDATE_EMAIL)){
-                $customer->emails_extra = $request->emails_extra;
-            }
-            $customer->phone2 = $request->phone2;
-            $customer->phone3 = $request->phone3;
-            $customer->phones_extra = $request->phones_extra;
-            $customer->save();
-
-            return redirect()->route('customer.index')->with('message', 'Lead Atualizado!');
-
+        if (count($phones) == 0){
+            $newphone = new ContactPhone();
+            $newphone->phone = $request['phoneid'];
+            $newphone->rating = $request['ratingid'];
+            $newphone->contact_id = $customer->id;
+            $newphone->save();
         }
+
+        foreach ($phones as $phone){
+            ContactPhone::where('id',$phone->id)->update([
+                'phone' => Strings::phone($request['phoneid'.$phone->id])
+            ]);
+            ContactPhone::where('id',$phone->id)->update([
+                'rating' => $request['ratingid'.$phone->id]
+            ]);
+        }
+
+        return redirect()->route('customer.index')->with('message', 'Customer Atualizado!');
     }
 
     /**
