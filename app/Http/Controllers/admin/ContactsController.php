@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ContactsRequest;
 use App\Imports\LeadsImportRule;
 use App\Contact;
 use App\Receitaws;
@@ -76,20 +77,14 @@ class ContactsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Contact $lead, Request $request)
+    public function update(Contact $lead, ContactsRequest $request)
     {
-        if (isset($request->firstname)){
-
             $lead->firstname = $request->firstname;
             $lead->lastname = $request->lastname;
             $lead->document = $request->document;
-            if (filter_var($request->email, FILTER_VALIDATE_EMAIL)){
                 $lead->email = $request->email;
-            }
             $lead->phone1 = $request->phone1;
-            if (filter_var($request->emails_extra, FILTER_VALIDATE_EMAIL)){
                 $lead->emails_extra = $request->emails_extra;
-            }
             $lead->phone2 = $request->phone2;
             $lead->phone3 = $request->phone3;
             $lead->phones_extra = $request->phones_extra;
@@ -97,8 +92,6 @@ class ContactsController extends Controller
             $lead->save();
 
             return redirect()->route('lead.index')->with('message', 'Lead Atualizado!');
-
-        }
 
     }
 

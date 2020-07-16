@@ -14,4 +14,5 @@ class Contact extends Model
     {
         return $this->hasOne(Receitaws::class,'id','receitaws_id');
     }
+
 }

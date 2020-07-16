@@ -56,7 +56,10 @@
 
                                         <label class="col-sm-1 col-form-label">Email</label>
                                         <div class="col-md-5">
-                                            <input type="text" class="form-control" name="email" value="{{ $lead->email }}">
+                                            <input type="text" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" name="email" value="{{ $lead->email }}">
+                                            @if($errors->has('email'))
+                                                <div class="text-danger">{{ $errors->first('email') }}</div>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -92,7 +95,10 @@
 
                                         <label class="col-sm-1 col-form-label">Alternatives Emails</label>
                                         <div class="col-md-5">
-                                            <input type="text" class="form-control" name="emails_extra" value="{{ $lead->emails_extra }}">
+                                            <input type="text" class="form-control {{ $errors->has('emails_extra') ? 'is-invalid' : '' }}" name="emails_extra" value="{{ $lead->emails_extra }}">
+                                            @if($errors->has('emails_extra'))
+                                                <div class="text-danger">{{ $errors->first('emails_extra') }}</div>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="card-footer">
