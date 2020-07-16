@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ContactsRequest;
 use App\Imports\LeadsImportRule;
 use App\Contact;
-use App\Receitaws;
+use App\ContactPhone;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -18,8 +18,13 @@ class ContactsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $leads = Contact::where('stage','LIKE','1%')->paginate(15);
-        return view('admin.leads.index',compact('leads'));
+        $leads = Contact::where('stage','LIKE','1%')->with(['relContactPhone' => function($query){
+            $query->orderBy('rating','DESC');
+        }])->paginate(15);
+
+        return view('admin.leads.index',[
+            'leads'         => $leads
+        ]);
     }
 
     /**
@@ -52,10 +57,12 @@ class ContactsController extends Controller
     public function show(Contact $lead)
     {
         $receitaws = $lead->relReceitaws()->first();
+        $contactPhone = $lead->relContactPhone()->orderBy('rating','DESC')->get();
 
         return view('admin.leads.edit',[
-            'lead' => $lead,
-            'receitaws' => $receitaws
+            'lead'              => $lead,
+            'receitaws'         => $receitaws,
+            'contactPhone'      => $contactPhone
         ]);
     }
 
@@ -79,19 +86,26 @@ class ContactsController extends Controller
      */
     public function update(Contact $lead, ContactsRequest $request)
     {
-            $lead->firstname = $request->firstname;
-            $lead->lastname = $request->lastname;
-            $lead->document = $request->document;
-                $lead->email = $request->email;
-            $lead->phone1 = $request->phone1;
-                $lead->emails_extra = $request->emails_extra;
-            $lead->phone2 = $request->phone2;
-            $lead->phone3 = $request->phone3;
-            $lead->phones_extra = $request->phones_extra;
+        $lead->firstname = $request->firstname;
+        $lead->lastname = $request->lastname;
+        $lead->document = $request->document;
+        $lead->email = $request->email;
+        $lead->emails_extra = $request->emails_extra;
 
-            $lead->save();
+        $lead->save();
 
-            return redirect()->route('lead.index')->with('message', 'Lead Atualizado!');
+        $phones = $lead->relContactPhone()->get();
+
+            foreach ($phones as $phone){
+                ContactPhone::where('id',$phone->id)->update([
+                    'phone' => $request['phoneid'.$phone->id]
+                ]);
+                ContactPhone::where('id',$phone->id)->update([
+                    'rating' => $request['ratingid'.$phone->id]
+                ]);
+            }
+
+        return redirect()->route('lead.index')->with('message', 'Lead Atualizado!');
 
     }
 
