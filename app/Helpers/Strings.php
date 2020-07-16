@@ -16,6 +16,6 @@ class Strings
 
         $dd = substr($phone,0,2);
 
-        return '(' . $dd . ')' . substr($phone,3);
+        return '(' . $dd . ')' . substr($phone,2);
     }
 }

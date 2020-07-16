@@ -64,11 +64,15 @@
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-1 col-form-label">Phone</label>
-                                        <div class="col-md-5">
-                                            <input type="text" class="form-control" name="phone1" value="{{ $lead->phone1 }}">
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="{{ 'phoneid' . $contactPhone[0]->id }}" value="{{ sizeof($contactPhone) == 0 ? '' : $contactPhone[0]->phone }}">
+                                        </div>
+                                        <label class="col-form-label">Rating</label>
+                                        <div class="col-md-1 mr-4">
+                                            <input type="text" class="form-control" name="{{ 'ratingid' . $contactPhone[0]->id }}" value="{{ sizeof($contactPhone) == 0 ? '' : $contactPhone[0]->rating }}">
                                         </div>
 
-                                        <label class="col-sm-1 col-form-label">Stage</label>
+                                        <label class="ml-md-5 col-sm-1 col-form-label">Stage</label>
                                         <div class="col-md-5">
                                             <input type="text" class="form-control" readonly name="stage" value="{{ $lead->stage }}">
                                         </div>
@@ -76,23 +80,23 @@
                                     <hr>
 
                                     <label class="h4">Outros Contatos</label>
+                                    @php($i = 0)
+                                    @foreach($contactPhone as $phone)
+                                        @if($i <> 0 AND $i < 5)
                                     <div class="form-group row">
-                                        <label class="col-sm-1 col-form-label">Phone2</label>
-                                        <div class="col-md-5">
-                                            <input type="text" class="form-control" name="phone2" value="{{ $lead->phone2 }}">
+                                        <label class="col-sm-1 col-form-label">{{ 'Phone ' . $i}}</label>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="{{ 'phoneid' . $phone->id }}" value="{{ $phone->phone }}">
                                         </div>
-
-                                        <label class="col-sm-1 col-form-label">Phone3</label>
-                                        <div class="col-md-5">
-                                            <input type="text" class="form-control" name="phone3" value="{{ $lead->phone3 }}">
+                                        <label class="col-form-label">Rating</label>
+                                        <div class="col-md-1 mr-4">
+                                            <input type="text" class="form-control" name="{{ 'ratingid' . $phone->id }}" value="{{ $phone->rating }}">
                                         </div>
                                     </div>
+                                        @endif()
+                                    @php($i++)
+                                    @endforeach
                                     <div class="form-group row">
-                                        <label class="col-sm-1 col-form-label">Others Phones</label>
-                                        <div class="col-md-5">
-                                            <input type="text" class="form-control" name="phones_extra" value="{{ $lead->phones_extra }}">
-                                        </div>
-
                                         <label class="col-sm-1 col-form-label">Alternatives Emails</label>
                                         <div class="col-md-5">
                                             <input type="text" class="form-control {{ $errors->has('emails_extra') ? 'is-invalid' : '' }}" name="emails_extra" value="{{ $lead->emails_extra }}">
