@@ -18,4 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('receitaws','Api\\receitawsController@getApiReceitaws');
+Route::get('receitaws','Api\\receitawsController@getApiReceitaws')->name('receitaws');
+Route::post('receitaws/store','Api\\ReceitawsController@store')->name('receitaws.store');
