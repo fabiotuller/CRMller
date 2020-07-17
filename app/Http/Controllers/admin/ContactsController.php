@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Contact_history;
 use App\Helpers\Strings;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ContactsRequest;
@@ -59,12 +60,14 @@ class ContactsController extends Controller
     public function show(Contact $lead)
     {
         $receitaws = $lead->relReceitaws()->first();
+        $histories = $lead->relhistory()->get();
         $contactPhone = $lead->relContactPhone()->orderBy('rating','DESC')->get();
 
         return view('admin.leads.edit',[
             'lead'              => $lead,
             'receitaws'         => $receitaws,
-            'contactPhone'      => $contactPhone
+            'contactPhone'      => $contactPhone,
+            'histories'         => $histories
         ]);
     }
 
@@ -128,6 +131,14 @@ class ContactsController extends Controller
     public function destroy(Contact $lead)
     {
         $lead->delete();
+
+        $history = new Contact_history();
+        $history->action = 'Delete_Contact';
+        $history->description = 'Contato marcado como deletado!';
+        $history->contact_id = $lead->id;
+
+        $history->save();
+
         return redirect()->route('lead.index')->with('message', 'Lead Apagado!');
     }
 

@@ -23,11 +23,11 @@
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="pill" href="#home"> Dados Cadastrais</a>
                         </li>
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link" data-toggle="pill" href="#menu1"> Outros Contatos</a>--}}
-{{--                        </li>--}}
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="pill" href="#menu2"> Receita WS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href="#menu3"> Histórico</a>
                         </li>
                     </ul>
 
@@ -113,20 +113,6 @@
                                 </div>
                             </form>
                         </div>
-{{--                        <div id="menu1" class="tab-pane fade">--}}
-{{--                            <form action="{{route('customer.update', $customer->id)}}" method="post" class="form-horizontal">--}}
-{{--                                <div class="card-body">--}}
-{{--                                    @csrf--}}
-{{--                                    @method('put')--}}
-{{--                                    --}}
-{{--                                    <div class="card-footer">--}}
-{{--                                        <div class="pull-right float-right">--}}
-{{--                                            <button type="submit" class="btn btn-info">Atualizar</button>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </form>--}}
-{{--                        </div>--}}
                         <div id="menu2" class="tab-pane fade">
                             <form action="" method="post" class="form-horizontal">
                                 <div class="card-body">
@@ -258,6 +244,28 @@
 
                                 </div>
                             </form>
+                        </div>
+                        <div id="menu3" class="tab-pane fade card-body">
+                            <table id="" class="table table-bordered table-hover dataTable dtr-inline col-6" role="grid" aria-describedby="">
+                                <thead>
+                                <tr role="row">
+                                    <th class="sorting" tabindex="0" rowspan="1" colspan="1">Action</th>
+                                    <th class="sorting" tabindex="0" rowspan="1" colspan="1">Description</th>
+                                    <th class="sorting" tabindex="0" rowspan="1" colspan="1">Created_at</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @forelse($histories as $history)
+                                    <tr role="row" class="odd">
+                                        <td>{{ $history->action }}</td>
+                                        <td>{{ $history->description }}</td>
+                                        <td>{{ $history->created_at->format('d-m-Y H:i:s') }}</td>
+                                    </tr>
+                                @empty
+                                    <p>Nenhum Histórico Encontrado!</p>
+                                @endforelse
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

@@ -15,7 +15,11 @@ class ForeignContactsReceitaws extends Migration
     {
         Schema::table('contacts',function ($table){
             $table->integer('receitaws_id')->after('id')->unsigned()->nullable();
+            $table->integer('user_id')->after('receitaws_id')->unsigned()->nullable();
+
+
             $table->foreign('receitaws_id')->references('id')->on('receitaws');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -27,5 +31,6 @@ class ForeignContactsReceitaws extends Migration
     public function down()
     {
         Schema::$table->dropForeign('contacts_receitaws_id_foreign');
+        Schema::$table->dropForeign('contacts_user_id_foreign');
     }
 }
