@@ -35,9 +35,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth
     Route::resource('leads','ContactsController')->names('lead');
     Route::post('leads/import','ContactsController@import')->name('lead.import');
     Route::get('leads/export/model','ContactsController@exportModel' )->name('lead.export.model');
+    Route::any('leads-search','ContactsController@search')->name('lead.search');
     Route::resource('roles','RoleController')->names('role');
     Route::resource('customers','CustomerController')->names('customer');
-
+    Route::any('customers-search','CustomerController@search')->name('customer.search');
 });
 
 Route::get('envio-email', function (){

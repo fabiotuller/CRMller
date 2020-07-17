@@ -23,6 +23,38 @@
             <div class="card">
                 <div class="card-body">
 
+                    <form action="{{ route('lead.search') }}" method="post" class="form-horizontal">
+                        <div class="">
+                            {!! csrf_field() !!}
+                            <div class="d-flex">
+                                <div class="mr-1 filter-id">
+                                    <input type="text" class="form-control" name="id" placeholder="Id" value="{{ isset($dataForm) ? $dataForm['id'] : '' }}">
+                                </div>
+                                <div class="mr-1">
+                                    <input type="text" class="form-control" name="document" placeholder="Document" value="{{ isset($dataForm) ? $dataForm['document'] : '' }}">
+                                </div>
+                                <div class="mr-1">
+                                    <input type="text" class="form-control" name="email" placeholder="Email" value="{{ isset($dataForm) ? $dataForm['email'] : '' }}">
+                                </div>
+                                <div class="mr-1">
+                                    <input type="text" class="form-control" name="phone" placeholder="Phone" value="{{ isset($dataForm) ? $dataForm['phone'] : '' }}">
+                                </div>
+                                <div class="mr-1">
+                                    <input type="text" class="form-control" name="firstname" placeholder="Firstname" value="{{ isset($dataForm) ? $dataForm['firstname'] : '' }}">
+                                </div>
+                                <div class="mr-1">
+                                    <input type="text" class="form-control" name="lastname" placeholder="Lastname" value="{{ isset($dataForm) ? $dataForm['lastname'] : '' }}">
+                                </div>
+                                <div class="">
+                                    <button type="submit" class="btn btn-sm btn-info">Pesquisar</button>
+                                    <a href="{{ route('lead.index') }}" class="text-dark">Limpar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="ml-2 mt-2">
+                        <label class="small">Total Registros: {{ $leads->total() }} </label>
+                    </div>
                     <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
                         <thead>
                         <tr role="row">
@@ -36,7 +68,7 @@
                         </tr>
                         </thead>
                         <tbody>
-
+{{--                        {{dd($leads)}}--}}
                         @forelse($leads as $lead)
                             <tr role="row" class="odd">
                                 <td tabindex="0" class="sorting_1"> {{ $lead->id }} </td>
@@ -58,12 +90,16 @@
                                 </td>
                             </tr>
                         @empty
-                            <p>Nenhum Lead Cadastrado!</p>
+                            <p>Nenhum Lead Encontrado!</p>
                         @endforelse
                         </tbody>
                     </table>
                     <div class="d-flex justify-content-center mt-2">
-                        {{ $leads->render() }}
+                        @if(isset($dataForm))
+                            {{ $leads->appends($dataForm)->links() }}
+                        @else
+                            {{ $leads->links() }}
+                        @endif
                     </div>
                 </div>
             </div>
