@@ -5,17 +5,19 @@ namespace App\Http\Controllers\Api;
 use App\Contact;
 use App\Http\Controllers\Controller;
 use App\Receitaws;
+use Illuminate\Http\Request;
 
 class receitawsController extends Controller
 {
     private $urlApi = 'https://www.receitaws.com.br/v1/';
     private $token = 'f95f46e1647098d498495fc6536bdd12f2baa2bf7e8e840b7014b4d8a9bb6030';
+    private $days = 180;
 
     public function getApiReceitaws(Receitaws $receitaws)
     {
         $urlApi = $this->urlApi;
         $token = $this->token;
-        $days = 180;
+        $days = $this->days;
 
         $contact = Contact::where('receitaws_id',NULL)->first();
         if (!isset($contact)){
@@ -109,8 +111,13 @@ class receitawsController extends Controller
 
     }
 
-    public function getExistsReceitaws()
+    public function store(Request $request)
     {
+        $request->urlapi == $this->urlApi;
+        $request->token == $this->token;
+        $request->days == $this->days;
+
+        return redirect()->route('receitaws.index');
 
     }
 

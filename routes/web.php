@@ -39,6 +39,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth
     Route::resource('roles','RoleController')->names('role');
     Route::resource('customers','CustomerController')->names('customer');
     Route::any('customers-search','CustomerController@search')->name('customer.search');
+    Route::get('receitaws','ReceitawsController@index')->name('receitaws.index');
 });
 
 Route::get('envio-email', function (){

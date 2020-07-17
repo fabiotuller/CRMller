@@ -279,8 +279,9 @@ return [
                     'url'  => 'admin/roles',
                 ],
                 [
-                    'text' => 'Outros',
-                    'url'  => '#',
+                    'text' => 'ReceitaWS',
+                    'icon' => 'fas fa-university',
+                    'url'  => 'admin/receitaws',
                 ],
 
             ],
