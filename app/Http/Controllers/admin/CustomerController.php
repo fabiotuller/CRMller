@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Contact_history;
 use App\ContactPhone;
 use App\Helpers\Strings;
 use App\Http\Controllers\Controller;
@@ -58,12 +59,14 @@ class CustomerController extends Controller
     public function show(Contact $customer)
     {
         $receitaws = $customer->relReceitaws()->first();
+        $histories = $customer->relhistory()->get();
         $contactPhone = $customer->relContactPhone()->orderBy('rating','DESC')->get();
 
         return view('admin.customers.edit',[
             'customer'          => $customer,
             'receitaws'         => $receitaws,
-            'contactPhone'      => $contactPhone
+            'contactPhone'      => $contactPhone,
+            'histories'         => $histories
         ]);
     }
 
@@ -126,6 +129,14 @@ class CustomerController extends Controller
     public function destroy(Contact $customer)
     {
         $customer->delete();
+
+        $history = new Contact_history();
+        $history->action = 'Delete_Contact';
+        $history->description = 'Contato marcado como deletado!';
+        $history->contact_id = $customer->id;
+
+        $history->save();
+
         return redirect()->route('customer.index')->with('message', 'Cliente Apagado!');
     }
 

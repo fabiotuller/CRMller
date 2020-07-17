@@ -143,4 +143,9 @@ class receitawsController extends Controller
 
     }
 
+    public function repeat()
+    {
+
+    }
+
 }
