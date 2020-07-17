@@ -13,18 +13,19 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ContactsController extends Controller
 {
+    public $totalPage = 10;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
+    public function index() {
         $leads = Contact::where('stage','LIKE','1%')->with(['relContactPhone' => function($query){
             $query->orderBy('rating','DESC');
-        }])->paginate(15);
+        }])->paginate($this->totalPage);
 
         return view('admin.leads.index',[
-            'leads'         => $leads
+            'leads'         => $leads,
         ]);
     }
 
@@ -145,5 +146,18 @@ class ContactsController extends Controller
         ];
 
         return response()->download($file,'Model Import Leads.xlsx',$header);
+    }
+
+    public function search(Request $request, Contact $lead)
+    {
+        $dataForm = $request->except('_token');
+
+        $leads = $lead->search($dataForm)->paginate($this->totalPage)->appends($dataForm);
+
+        //dd($leads)->all();
+        return view('admin.leads.index',[
+            'leads'         => $leads,
+            'dataForm'      => $dataForm
+        ]);
     }
 }
