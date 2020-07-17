@@ -19,6 +19,11 @@ class Contact extends Model
         return $this->hasOne(Receitaws::class,'id','receitaws_id');
     }
 
+    public function relhistory()
+    {
+        return $this->hasMany(Contact_history::class,'contact_id','id');
+    }
+
     public function relContactPhone()
     {
         return $this->hasMany(ContactPhone::class,'contact_id','id');
