@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
+    public $totalPage = 10;
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +21,7 @@ class CustomerController extends Controller
     {
         $customers = Contact::where('stage','NOT LIKE','1%')->with(['relContactPhone' => function($query){
             $query->orderBy('rating','DESC');
-        }])->paginate(15);
+        }])->paginate($this->totalPage);
 
         return view('admin.customers.index',[
             'customers'         => $customers
@@ -126,5 +127,18 @@ class CustomerController extends Controller
     {
         $customer->delete();
         return redirect()->route('customer.index')->with('message', 'Cliente Apagado!');
+    }
+
+    public function search(Request $request, Contact $customer)
+    {
+        $dataForm = $request->except('_token');
+
+        $customers = $customer->search($dataForm)->paginate($this->totalPage)->appends($dataForm);
+
+        //dd($customers)->all();
+        return view('admin.customers.index',[
+            'customers'         => $customers,
+            'dataForm'      => $dataForm
+        ]);
     }
 }
