@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Contact;
+use App\Contact_history;
 use App\Http\Controllers\Controller;
 use App\Receitaws;
 use Illuminate\Http\Request;
@@ -60,6 +61,17 @@ class receitawsController extends Controller
                 'receitaws_id' => $receitaws->id
             ]);
 
+
+            /**
+             * Atualizar Ação no History.
+             **/
+            $history = new Contact_history();
+            $history->action = 'Consult_ReceitaWS';
+            $history->description = ($json->status == 'ERROR') ? 'Error: ' . $json->message . '!' : 'Consulta Realizada com Sucesso!';
+            $history->contact_id = $contact->id;
+
+            $history->save();
+
             return redirect()->route('lead.index');
 
         }
@@ -106,6 +118,16 @@ class receitawsController extends Controller
         Contact::where('id',$contact->id)->update([
             'receitaws_id' => $receitaws->id
             ]);
+
+        /**
+         * Adicionando Ação no History.
+         **/
+        $history = new Contact_history();
+        $history->action = 'Consult_ReceitaWS';
+        $history->description = ($json->status == 'ERROR') ? 'Error: ' . $json->message . '!' : 'Consulta Realizada com Sucesso!';
+        $history->contact_id = $contact->id;
+
+        $history->save();
 
         return redirect()->route('lead.index');
 

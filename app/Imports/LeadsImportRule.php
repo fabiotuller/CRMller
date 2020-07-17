@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Contact;
+use App\Contact_history;
 use App\ContactPhone;
 use App\Helpers\Strings;
 use Illuminate\Support\Collection;
@@ -27,6 +28,19 @@ class LeadsImportRule implements ToCollection
                     'deleted_at' => NULL
                 ]);
 
+                /**
+                 * Atualizar Ação no History.
+                 **/
+                $history = new Contact_history();
+                $history->action = 'Update_Contact';
+                $history->description = 'Contato Atualizado!';
+                $history->contact_id = $contact->id;
+
+                $history->save();
+
+                /**
+                 * Atualizar Telefones.
+                 **/
                 $phones = NULL;
                 $phones = $contact->relContactPhone()->get()->where('phone','LIKE',Strings::phone($rows[$i][3]));
 
@@ -66,6 +80,10 @@ class LeadsImportRule implements ToCollection
                 $phones = NULL;
 
             }else {
+
+                /**
+                 * Adicionando novo Contato.
+                 **/
                 $contact = new Contact();
 
                 $contact->document = $rows[$i][0];
@@ -76,6 +94,19 @@ class LeadsImportRule implements ToCollection
 
                 $contact->save();
 
+                /**
+                 * Adicionando Ação no History.
+                 **/
+                $history = new Contact_history();
+                $history->action = 'New_Contact';
+                $history->description = 'Cadastrado! Bem vindo!';
+                $history->contact_id = $contact->id;
+
+                $history->save();
+
+                /**
+                 * Adicionando Telefones.
+                 **/
                 if (!empty($rows[$i][3])){
                     $contact_phones = new ContactPhone();
                     $contact_phones->phone = $rows[$i][3];
