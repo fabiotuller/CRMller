@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
 use App\Contact_history;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ContactHistoryController extends Controller
 {

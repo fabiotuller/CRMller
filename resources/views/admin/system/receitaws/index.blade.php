@@ -62,7 +62,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <a href="{{ route('receitaws') }}" class="col-sm-1 col-form-label">Run</a>
+                                        <a href="{{ route('receitaws.api') }}" class="col-sm-1 col-form-label">Run</a>
                                     </div>
                                     <div class="">
                                         <div class="pull-right float-right">

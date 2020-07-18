@@ -18,7 +18,11 @@ class CreateCampaignsTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('filters');
+            $table->string('active');
+            $table->integer('duration');
+            $table->dateTime('finished_at');
             $table->timestamps();
+
         });
 
         Schema::create('campaigns_contacts', function (Blueprint $table) {
