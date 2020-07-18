@@ -1,12 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
 use App\Campaign;
+use App\Contact;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class CampaignController extends Controller
 {
+    public $totalPage = 10;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +17,15 @@ class CampaignController extends Controller
      */
     public function index()
     {
-        //
+        $campaigns = Campaign::query()->paginate($this->totalPage);
+        $contacts = Contact::with(['relContactPhone' => function($query){
+            $query->orderBy('rating','DESC');
+        }])->paginate($this->totalPage);
+
+        return view('admin.campaign.index',[
+            'campaigns'         => $campaigns,
+            'contacts'         => $contacts,
+        ]);
     }
 
     /**
@@ -24,7 +35,7 @@ class CampaignController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.campaign.create');
     }
 
     /**
@@ -81,5 +92,18 @@ class CampaignController extends Controller
     public function destroy(Campaign $campaign)
     {
         //
+    }
+
+    public function search(Request $request, Campaign $campaign, Contact $contact)
+    {
+        $dataForm = $request->except('_token');
+
+        $campaigns = $campaign->search($dataForm)->paginate($this->totalPage)->appends($dataForm);
+
+        //dd($dataForm)->all();
+        return view('admin.campaign.index',[
+            'campaigns'         => $campaigns,
+            'dataForm'         => $dataForm
+        ]);
     }
 }

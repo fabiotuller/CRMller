@@ -262,6 +262,14 @@ return [
             //'label'       => 4,
             //'label_color' => 'success',
         ],
+        ['header' => 'Campaigns'],
+        [
+            'text'        => 'Definir Mailling',
+            'url'         => 'admin/campaign',
+            'icon'        => 'fas fa-user-tag',
+            //'label'       => 4,
+            //'label_color' => 'success',
+        ],
         ['header' => 'account_settings'],
 
         [
