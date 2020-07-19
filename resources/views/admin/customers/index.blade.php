@@ -81,7 +81,6 @@
                                 <td tabindex="0" class="sorting_1"> {{ $customer->id }} </td>
                                 <td>{{ $customer->document }}</td>
                                 <td>{{ $customer->email }}</td>
-                                
                                 <td>{{ sizeof($customer->relContactPhone) == 0 ? '' : $customer->relContactPhone[0]->phone }}</td>
                                 <td>{{ $customer->firstname }}</td>
                                 <td>{{ $customer->lastname }}</td>
