@@ -44,11 +44,16 @@
                                     <input type="text" class="form-control" name="lastname" placeholder="Lastname" value="{{ isset($dataForm) ? $dataForm['lastname'] : '' }}">
                                 </div>
                                 <div class="mr-1">
-                                    <input type="text" class="form-control" name="stage" placeholder="Stage" value="{{ isset($dataForm) ? $dataForm['stage'] : '' }}">
+                                    <select class="form-control" name="stage" id="stage">
+                                        <option selected value="">Stage</option>
+                                        @foreach($stages as $stage)
+                                            <option {{ request()->session()->has('customer_filter_stage') ? (request()->session()->get('customer_filter_stage') == $stage->label ? 'selected' : '' ): '' }} value="{{ $stage->label }}">{{ $stage->label }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="">
                                     <button type="submit" class="btn btn-sm btn-info">Pesquisar</button>
-                                    <a href="{{ route('customer.index') }}" class="text-dark">Limpar</a>
+                                    <a href="{{ route('customer.index') }}" {{ request()->session()->put('customer_filter_stage','') }} class="text-dark">Limpar</a>
                                 </div>
                             </div>
                         </div>
@@ -76,6 +81,7 @@
                                 <td tabindex="0" class="sorting_1"> {{ $customer->id }} </td>
                                 <td>{{ $customer->document }}</td>
                                 <td>{{ $customer->email }}</td>
+                                
                                 <td>{{ sizeof($customer->relContactPhone) == 0 ? '' : $customer->relContactPhone[0]->phone }}</td>
                                 <td>{{ $customer->firstname }}</td>
                                 <td>{{ $customer->lastname }}</td>
