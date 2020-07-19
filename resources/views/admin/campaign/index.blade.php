@@ -11,8 +11,7 @@
                     {{ session()->get('message') }}
                 </div>
             @endif
-            <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#modalImport">Nova Campanha</button>
-            @include('admin.leads.modal.import')
+            <a class="btn btn-info btn-md" href="{{ route('campaign.create') }}">Nova Campanha</a>
         </div>
     </div>
 @stop
@@ -25,7 +24,7 @@
 
                     <form action="{{ route('campaign.search') }}" method="post" class="form-horizontal">
                         <div class="">
-                            {!! csrf_field() !!}
+                            @csrf
                             <div class="d-flex">
                                 <div class="mr-1 col-1 filter-id">
                                     <input type="text" class="form-control" name="id" placeholder="Id" value="{{ isset($dataForm) ? $dataForm['id'] : '' }}">

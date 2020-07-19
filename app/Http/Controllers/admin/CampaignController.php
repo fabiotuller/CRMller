@@ -6,6 +6,7 @@ use App\Campaign;
 use App\Contact;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class CampaignController extends Controller
 {
@@ -18,13 +19,9 @@ class CampaignController extends Controller
     public function index()
     {
         $campaigns = Campaign::query()->paginate($this->totalPage);
-        $contacts = Contact::with(['relContactPhone' => function($query){
-            $query->orderBy('rating','DESC');
-        }])->paginate($this->totalPage);
 
         return view('admin.campaign.index',[
             'campaigns'         => $campaigns,
-            'contacts'         => $contacts,
         ]);
     }
 
@@ -35,7 +32,25 @@ class CampaignController extends Controller
      */
     public function create()
     {
-        return view('admin.campaign.create');
+        $campaigns = Campaign::query()->paginate($this->totalPage);
+        $contacts = Contact::with(['relContactPhone' => function($query){
+            $query->orderBy('rating','DESC');
+        }])->paginate($this->totalPage);
+
+        $stages = DB::table('contact_stage_option')->get();
+        $region = DB::table('receitaws')->select('uf')->distinct()
+            ->where('uf','!=',NULL)->get();
+        $city = DB::table('receitaws')->select('municipio')->distinct()
+            ->where('municipio','!=',NULL)->get();
+
+        return view('admin.campaign.create',[
+            'campaigns'         => $campaigns,
+            'contacts'          => $contacts,
+
+            'stages'            => $stages,
+            'region'            => $region,
+            'city'              => $city
+        ]);
     }
 
     /**
@@ -46,7 +61,7 @@ class CampaignController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
@@ -94,16 +109,48 @@ class CampaignController extends Controller
         //
     }
 
-    public function search(Request $request, Campaign $campaign, Contact $contact)
+    public function search(Request $request, Campaign $campaign)
     {
-        $dataForm = $request->except('_token');
-
+        $dataForm = $request->except('_token','_method');
         $campaigns = $campaign->search($dataForm)->paginate($this->totalPage)->appends($dataForm);
 
-        //dd($dataForm)->all();
         return view('admin.campaign.index',[
             'campaigns'         => $campaigns,
             'dataForm'         => $dataForm
+        ]);
+    }
+
+    public function searchCreate(Request $request, Campaign $campaign, Contact $contact)
+    {
+        $dataForm = $request->except('_token','_method');
+        if (!is_null($dataForm['stage']))
+            $request->session()->put('campaign_create_filter_stage',$dataForm['stage']);
+        else
+            $request->session()->put('campaign_create_filter_stage','');
+        if (!is_null($dataForm['region']))
+            $request->session()->put('campaign_create_filter_region',$dataForm['region']);
+        else
+            $request->session()->put('campaign_create_filter_region','');
+        if (!is_null($dataForm['city']))
+            $request->session()->put('campaign_create_filter_city',$dataForm['city']);
+        else
+            $request->session()->put('campaign_create_filter_city','');
+
+        $contacts = $contact->searchCreate($dataForm)->paginate($this->totalPage)->appends($dataForm);
+
+        $stages = DB::table('contact_stage_option')->get();
+        $region = DB::table('receitaws')->select('uf')->distinct()
+            ->where('uf','!=',NULL)->get();
+        $city = DB::table('receitaws')->select('municipio')->distinct()
+            ->where('municipio','!=',NULL)->get();
+
+        return view('admin.campaign.create',[
+            'contacts'         => $contacts,
+            'dataForm'         => $dataForm,
+
+            'stages'            => $stages,
+            'region'            => $region,
+            'city'              => $city
         ]);
     }
 }

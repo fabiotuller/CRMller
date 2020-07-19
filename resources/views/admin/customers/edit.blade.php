@@ -74,7 +74,11 @@
 
                                         <label class="ml-md-5 col-sm-1 col-form-label">Stage</label>
                                         <div class="col-md-5">
-                                            <input type="text" class="form-control" readonly name="stage" value="{{ $customer->stage }}">
+                                            <select class="form-control" disabled name="stage" id="stage">
+                                                @foreach($stages as $stage)
+                                                <option value="{{ $stage->label }}" {{ $stage->label == $customer->stage ? 'selected' : '' }}>{{ $stage->label }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <hr>
