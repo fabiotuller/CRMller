@@ -33,8 +33,10 @@ class Contact extends Model
     public function search(Array $data)
     {
 
-        $sql = DB::table('contacts')->join('contact_phones','contact_phones.contact_id','=','contacts.id')
-            ->where(function ($query) use($data) {
+//        $sql = DB::table('contacts')->join('contact_phones','contact_phones.contact_id','=','contacts.id')
+//            ->where(function ($query) use($data) {
+
+        $sql = Contact::with('relContactPhone')->where(function ($query) use($data) {
             if (isset($data['id']))
                 $query->where('contacts.id',$data['id']);
 
