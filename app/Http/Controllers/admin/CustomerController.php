@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Contact;
 use App\Http\Requests\ContactsRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
@@ -20,12 +21,14 @@ class CustomerController extends Controller
      */
     public function index()
     {
+        $stages = DB::table('contact_stage_option')->get();
         $customers = Contact::where('stage','NOT LIKE','1%')->with(['relContactPhone' => function($query){
             $query->orderBy('rating','DESC');
         }])->paginate($this->totalPage);
 
         return view('admin.customers.index',[
-            'customers'         => $customers
+            'customers'         => $customers,
+            'stages'            => $stages
         ]);
     }
 
@@ -58,11 +61,13 @@ class CustomerController extends Controller
      */
     public function show(Contact $customer)
     {
+        $stages = DB::table('contact_stage_option')->get();
         $receitaws = $customer->relReceitaws()->first();
         $histories = $customer->relhistory()->get();
         $contactPhone = $customer->relContactPhone()->orderBy('rating','DESC')->get();
 
         return view('admin.customers.edit',[
+            'stages'            => $stages,
             'customer'          => $customer,
             'receitaws'         => $receitaws,
             'contactPhone'      => $contactPhone,
@@ -95,6 +100,7 @@ class CustomerController extends Controller
         $customer->document = $request->document;
         $customer->email = $request->email;
         $customer->emails_extra = $request->emails_extra;
+        $customer->stage = $request->stage;
 
         $customer->save();
 
@@ -143,13 +149,18 @@ class CustomerController extends Controller
     public function search(Request $request, Contact $customer)
     {
         $dataForm = $request->except('_token');
-
+        if (!is_null($dataForm['stage']))
+            $request->session()->put('customer_filter_stage',$dataForm['stage']);
+        else
+            $request->session()->put('customer_filter_stage','');
+        $stages = DB::table('contact_stage_option')->get();
         $customers = $customer->search($dataForm)->paginate($this->totalPage)->appends($dataForm);
 
         //dd($customers)->all();
         return view('admin.customers.index',[
-            'customers'         => $customers,
-            'dataForm'      => $dataForm
+            'customers'     => $customers,
+            'dataForm'      => $dataForm,
+            'stages'        => $stages
         ]);
     }
 }

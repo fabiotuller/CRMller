@@ -40,6 +40,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth
     Route::resource('customers','CustomerController')->names('customer');
     Route::any('customers-search','CustomerController@search')->name('customer.search');
     Route::get('receitaws','ReceitawsController@index')->name('receitaws.index');
+    Route::resource('campaign','CampaignController')->names('campaign');
+    Route::any('campaign-search','CampaignController@search')->name('campaign.search');
+    Route::any('campaign-search-create','CampaignController@searchCreate')->name('campaign.search.create');
 });
 
 Route::get('envio-email', function (){

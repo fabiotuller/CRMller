@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Contact extends Model
 {
@@ -32,7 +33,8 @@ class Contact extends Model
     public function search(Array $data)
     {
 
-        $sql = $this->where(function ($query) use($data) {
+        $sql = DB::table('contacts')->join('contact_phones','contact_phones.contact_id','=','contacts.id')
+            ->where(function ($query) use($data) {
             if (isset($data['id']))
                 $query->where('contacts.id',$data['id']);
 
@@ -42,8 +44,8 @@ class Contact extends Model
             if (isset($data['email']))
                 $query->where('contacts.email','LIKE','%'.$data['email'].'%');
 
-//            if (isset($data['phone']))
-//                $query->where('contact_phones.phone','LIKE','%'.$data['phone'].'%');
+            if (isset($data['phone']))
+                $query->where('contact_phones.phone','LIKE','%'.$data['phone'].'%');
 
             if (isset($data['firstname']))
                 $query->where('contacts.firstname','LIKE','%'.$data['firstname'].'%');
@@ -53,6 +55,25 @@ class Contact extends Model
 
             if (isset($data['stage']))
                 $query->where('contacts.stage','LIKE','%'.$data['stage'].'%');
+
+        });//->toSql();dd($sql);
+
+        return $sql;
+    }
+
+    public function searchCreate(Array $data)
+    {
+        $sql = DB::table('contacts')->join('receitaws','contacts.receitaws_id','=','receitaws.id')
+            ->where(function ($query) use($data) {
+
+            if (isset($data['stage']))
+                $query->where('contacts.stage','LIKE','%'.$data['stage'].'%');
+
+            if (isset($data['region']))
+                $query->where('receitaws.region','LIKE','%'.$data['region'].'%');
+
+            if (isset($data['city']))
+                $query->where('receitaws.municipio','LIKE','%'.$data['city'].'%');
 
         });//->toSql();dd($sql);
 
